@@ -1,7 +1,7 @@
-/* Pavan Nadimpalli portfolio demo: all styles.
+/* Pavan Nadimpalli portfolio: all styles.
    1) base rules shared by every section  2) the page design, section by section  3) responsive rules (touch, tablet, phone) */
 
-/* Base rules for every section. Layout demo only, not the real site. Designed for 1440 x 900. */
+/* Base rules for every section. Designed for 1440 x 900. */
 :root{--u:1vh}
 @supports (height:1svh){:root{--u:1svh}}
 *{box-sizing:border-box}
@@ -449,3 +449,5 @@ html[data-bp="phone"] #edu .ghost.lit{color:var(--acc);-webkit-text-stroke:0;opa
 html[data-bp="phone"] #edu .espine{display:block;position:absolute;left:var(--s6);top:calc(100% + var(--s2));height:calc(var(--s12) - var(--s4));width:2px;background:linear-gradient(var(--acc),rgba(255,75,58,0));transform-origin:top;transform:scaleY(0)}
 html[data-bp="phone"] #edu .edi:last-of-type .espine{display:none}
 }
+/* contact form: the hidden spam trap field (humans never see or fill it) */
+.hp{position:absolute!important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}

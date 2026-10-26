@@ -1,8 +1,8 @@
-/* Pavan Nadimpalli portfolio demo: scroll setup and every section's animation.
+/* Pavan Nadimpalli portfolio: scroll setup and every section's animation.
    Order: 1) scroll setup  2) one-time page setup  3) animations per screen size (Home, About, Skills, Experience, Projects, Education, Resume, Contact)  4) start-up.
    Plain scripts, no build step. Needs gsap, ScrollTrigger and Lenis from vendor/ and the content in data.js. */
 
-/* Folder of the images, found from this script's own address (so it works from index.html and from demo-a.html). */
+/* Folder of the images, found from this script's own address (so it works wherever the page is served). */
 const ASSETS = document.currentScript ? new URL("../assets/", document.currentScript.src).href : "assets/";
 
 /* =========================================================================
@@ -32,15 +32,15 @@ const ASSETS = document.currentScript ? new URL("../assets/", document.currentSc
     gsap.ticker.add(() => { lenis.velocity = window.scrollY - ly; ly = window.scrollY; });
   }
   gsap.ticker.lagSmoothing(0);
-  window.demo = { gsap, ScrollTrigger, lenis, DATA, touch };   // also used by the test scripts
+  window.site = { gsap, ScrollTrigger, lenis, DATA, touch };   // shared with the sections below
 })();
 
 /* =========================================================================
    2 to 4. PAGE SETUP AND SECTION ANIMATIONS
    ========================================================================= */
 window.addEventListener("load", () => {
-  const { gsap, lenis, DATA, touch } = window.demo;
-  const ScrollTrigger = window.demo.ScrollTrigger;
+  const { gsap, lenis, DATA, touch } = window.site;
+  const ScrollTrigger = window.site.ScrollTrigger;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
@@ -242,18 +242,26 @@ window.addEventListener("load", () => {
       catch { const t = document.createElement("textarea"); t.value = MAIL; t.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); } catch {} t.remove(); }
       copied.classList.add("on"); clearTimeout(ct); ct = setTimeout(() => copied.classList.remove("on"), 2000);
     });
-    /* Real site: replace with a form service (e.g. Formspree) in Step 5.
-       For this demo the form checks the fields, then opens the visitor's mail app with a filled-in mailto link. */
-    const form = $("#cform", reach), msg = $("#cmsg", reach);
-    form.addEventListener("submit", (e) => {
+    /* The form posts to the site's own backend (POST /api/contact), which emails me. If the backend cannot be reached,
+       it falls back to opening the visitor's mail app with a filled-in mailto link. */
+    const form = $("#cform", reach), msg = $("#cmsg", reach), send = $(".send", form);
+    const say = (t, cls = "") => { msg.className = "msg " + cls; msg.textContent = t; };
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name = form.name.value.trim(), email = form.email.value.trim(), message = form.message.value.trim();
-      const bad = (t) => { msg.className = "msg"; msg.textContent = t; };
-      if (!name || !email || !message) return bad("Please fill in your name, email and message.");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return bad("Please enter a valid email address.");
-      const subject = "Portfolio message from " + name, body = message + "\n\nFrom: " + name + " <" + email + ">";
-      msg.className = "msg ok"; msg.textContent = "Opening your mail app…";
-      location.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      const name = form.name.value.trim(), email = form.email.value.trim(), message = form.message.value.trim(), website = form.website.value;
+      if (!name || !email || !message) return say("Please fill in your name, email and message.");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return say("Please enter a valid email address.");
+      if (message.length < 10) return say("Please write a little more (at least 10 characters).");
+      const mailto = () => { location.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("Portfolio message from " + name) + "&body=" + encodeURIComponent(message + "\n\nFrom: " + name + " <" + email + ">"); };
+      send.disabled = true; say("Sending…", "ok");
+      try {
+        const res = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, email, message, website }) });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) { say("Thanks, I'll reply soon ✓", "ok"); form.reset(); }
+        else if (res.status === 400 || res.status === 429) say(data.error || "Something went wrong. Please try again.");
+        else { say("The message service is not available right now. Opening your mail app instead…", "ok"); mailto(); }
+      } catch { say("I could not reach the message service. Opening your mail app instead…", "ok"); mailto(); }   // offline, or the page is not served by the backend
+      finally { send.disabled = false; }
     });
   }
 
