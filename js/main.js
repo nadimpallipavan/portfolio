@@ -2,6 +2,9 @@
    Order: 1) scroll setup  2) one-time page setup  3) animations per screen size (Home, About, Skills, Experience, Projects, Education, Resume, Contact)  4) start-up.
    Plain scripts, no build step. Needs gsap, ScrollTrigger and Lenis from vendor/ and the content in data.js. */
 
+/* Folder of the images, found from this script's own address (so it works from index.html and from demo-a.html). */
+const ASSETS = document.currentScript ? new URL("../assets/", document.currentScript.src).href : "assets/";
+
 /* =========================================================================
    1. SCROLL SETUP: GSAP + ScrollTrigger, Lenis smooth scroll (mouse and trackpad only)
    ========================================================================= */
@@ -78,21 +81,117 @@ window.addEventListener("load", () => {
   });
   dots.forEach((d) => d.appendChild(document.createElement("b")));
 
+  /* PHONE + TABLET extras. They are hidden on desktop by the CSS, and wrapping them changes nothing there. */
+  {
+    /* ABOUT: a stage that holds the sentence and the text ring; the cards get their stacking index */
+    const stage = document.createElement("div"); stage.className = "astage";
+    const ringS0 = $(".ringS", aboutEl); aboutEl.insertBefore(stage, ringS0); stage.appendChild(ringS0); stage.appendChild(sent);
+    $$(".card", aboutEl).forEach((c, i) => c.style.setProperty("--i", i));
+    /* EXPERIENCE: job cards in a list, a progress line and a dot per job */
+    const jobs = document.createElement("div"); jobs.className = "jobs";
+    const cl = document.createElement("div"); cl.className = "cline"; cl.innerHTML = "<i></i>"; jobs.appendChild(cl);
+    expEl.insertBefore(jobs, $(".meta.b", expEl));
+    items.forEach((it) => {
+      const jc = document.createElement("div"); jc.className = "jc";
+      [...it.children].filter((ch) => !ch.classList.contains("date")).forEach((ch) => jc.appendChild(ch));
+      it.appendChild(jc); const cd = document.createElement("i"); cd.className = "cdot"; it.appendChild(cd); jobs.appendChild(it);
+    });
+    /* RESUME: the title gets a mask for its reveal */
+    const rs = $("#resume h2 span"); rs.innerHTML = '<span class="mask"><span class="m-in">' + rs.textContent + "</span></span>";
+    /* SKILLS: the skill groups as pill grids; tapping a pill turns it red */
+    const sk = $("#skills"), sg = document.createElement("div"); sg.className = "sgroups";
+    sg.innerHTML = DATA.skillGroups.map(([t, a]) => `<div><h4>${t}</h4><div class="pl">${a.map((s) => `<button type="button" class="pill2">${s}</button>`).join("")}</div></div>`).join("");
+    sk.insertBefore(sg, $(".meta.b", sk));
+    sg.addEventListener("click", (e) => { const b = e.target.closest(".pill2"); if (b) b.classList.toggle("sel"); });
+  }
+
+  /* PHONE 3D extras (up to 640px wide). Hidden or transparent everywhere else, so desktop and tablet look exactly as before. */
+  {
+    const div = (cls) => { const d = document.createElement("div"); d.className = cls; return d; };
+    /* EXPERIENCE: the year range that stands behind each job card */
+    items.forEach((it) => {
+      const ys = ($(".date", it).textContent.match(/\d{4}/g) || []), g = div("yrbg");
+      g.setAttribute("aria-hidden", "true"); g.textContent = ys.length > 1 ? ys[0] + "\u2013" + ys[1] : ys[0] + "\u2013NOW";
+      it.insertBefore(g, it.firstChild);
+      const jd = div("jdate"); jd.textContent = $(".date", it).textContent; $(".jc", it).insertBefore(jd, $(".jc", it).firstChild);   // the full date moves into the card
+    });
+    /* MORE BUILDS: each card gets a front (icon + name) and a back (description + tech pills) */
+    $$("#more .mb").forEach((mb) => {
+      const f = div("mbf"), k = div("mbk"), inner = div("mbi");
+      [$(".ico2", mb), $("h3", mb)].forEach((e) => f.appendChild(e));
+      [...mb.children].filter((e) => !f.contains(e)).forEach((e) => k.appendChild(e));
+      inner.append(f, k); mb.appendChild(inner); mb.tabIndex = 0; mb.setAttribute("role", "button");
+    });
+    /* EDUCATION: each degree sits in a wrapper with a big outlined year behind it */
+    $$("#edu .school").forEach((s) => {
+      const w = div("edi"), g = div("ghost");
+      g.textContent = $(".yr", s).dataset.to; g.setAttribute("aria-hidden", "true");
+      const g2 = g.cloneNode(true); g2.className = "ghost lit";                                // a red-filled copy that fades in when the card is flat
+      const ed = DATA.education[$$("#edu .school").indexOf(s)], gpa = ed.detail.match(/C?GPA (\d+(?:\.\d+)?)/);
+      const top = div("etop"), edge = div("eedge");
+      top.innerHTML = `<span class="lvl">${/^MS/.test(ed.title) ? "Master's" : "Bachelor's"}</span>` + (gpa ? `<span class="gpa"><b>${gpa[1]}</b>${/CGPA/.test(ed.detail) ? "CGPA" : "GPA"}</span>` : "");
+      s.insertBefore(edge, s.firstChild); s.insertBefore(top, s.children[1]);
+      if ($$("#edu .school").indexOf(s) < DATA.education.length - 1) w.appendChild(div("espine"));                                             // the spine that links the cards into a timeline
+      s.parentNode.insertBefore(w, s); w.append(g, g2, s);
+    });
+    /* RESUME: page 1 of the resume as a sheet (opens the PDF when tapped) */
+    const sh = document.createElement("a");
+    sh.className = "sheet"; sh.href = ASSETS + "resume/Pavan_Nadimpalli_Resume.pdf"; sh.target = "_blank"; sh.rel = "noopener"; sh.setAttribute("aria-label", "Open the resume PDF");
+    sh.innerHTML = `<img src="${ASSETS}resume/resume-page1.jpg" width="900" height="1166" alt="Page 1 of the resume" loading="lazy" decoding="async">`;
+    $("#resume h2").after(sh);
+    /* CONTACT: a second title made of letters that can stand up (the first title stays untouched for other screens) */
+    const h2 = $("#contact h2"), sp = document.createElement("h2");
+    sp.className = "disp sayp"; sp.setAttribute("aria-label", "Say hello");
+    sp.innerHTML = ["Say", "Hello"].map((w) => `<span class="wd">${[...w].map((c) => `<span class="lt3" aria-hidden="true">${c}</span>`).join("")}</span>`).join(" ");
+    h2.after(sp);
+  }
+
+  /* TOP BAR, MENU and "Let's talk" (phone and tablet only; hidden on desktop by the CSS) */
+  {
+    const html = document.documentElement, bar = $(".tb"), mbtn = $(".mbtn"), mnav = $(".mnav"), lets = $(".lets");
+    const compact = () => html.dataset.bp !== "desk";
+    const yOf = (id) => { const st = ScrollTrigger.getAll().find((t) => t.pin && t.trigger && t.trigger.id === id); return st ? Math.round(st.start) : Math.round(document.getElementById(id).getBoundingClientRect().top + window.scrollY); };
+    const goTo = (id) => lenis.scrollTo(id === "home" ? 0 : yOf(id), { duration: 1.1 });
+    const setMenu = (open) => {
+      mnav.classList.toggle("open", open); html.classList.toggle("menu-open", open);
+      mbtn.setAttribute("aria-expanded", open); mbtn.textContent = open ? "Close" : "Menu"; bar.classList.remove("hide");
+      if (lenis.stop) { open ? lenis.stop() : lenis.start(); }
+    };
+    mbtn.addEventListener("click", () => setMenu(!mnav.classList.contains("open")));
+    addEventListener("keydown", (e) => { if (e.key === "Escape" && mnav.classList.contains("open")) setMenu(false); });
+    $$("a", mnav).concat($(".brand", bar), lets).forEach((a) => a.addEventListener("click", (e) => {
+      e.preventDefault(); const id = a.getAttribute("href").slice(1); setMenu(false); requestAnimationFrame(() => goTo(id));
+    }));
+    /* the bar hides while you scroll down and shows again as soon as you scroll up; the pill appears after Home and hides inside Contact */
+    let ly = window.scrollY, inC = false, inR = false;
+    const sync = () => { lets.classList.toggle("show", compact() && window.scrollY > innerHeight * 0.85 && !inC && !inR && !mnav.classList.contains("open")); };
+    new IntersectionObserver((e) => { inC = e.some((x) => x.isIntersecting); sync(); }).observe($("#contact"));
+    new IntersectionObserver((e) => { inR = e.some((x) => x.isIntersecting); sync(); }).observe($("#reach"));
+    addEventListener("scroll", () => {
+      if (!compact()) return;
+      const y = window.scrollY;
+      if (!html.classList.contains("menu-open")) { if (y > ly + 6 && y > 120) bar.classList.add("hide"); else if (y < ly - 6 || y <= 120) bar.classList.remove("hide"); }
+      ly = y; sync();
+    }, { passive: true });
+    addEventListener("resize", () => { if (!compact() && mnav.classList.contains("open")) setMenu(false); sync(); });
+    addEventListener("orientationchange", () => setTimeout(() => ScrollTrigger.refresh(), 300));
+  }
+
   /* PROJECTS: real screenshots (720px copies for phones via srcset), a 3D ring for desktop and tablet, a swipe carousel for phones */
   const proj = $("#proj");
   const LIVE = [
-    { name: "A Fresh Leaf", key: "afreshleaf", dom: "afreshleaf.com", desc: "Company site.", tags: ["MERN stack", "SEO", "Google Search Console"] },
-    { name: "GoMunchz", key: "gomunchz", dom: "gomunchz.com", desc: "MERN e-commerce with product catalog, cart, checkout and order management.", tags: ["MERN", "E-commerce"] },
-    { name: "Kingston K9 Rescue Reserve", key: "kingstonk9", dom: "kingstonk9.com", desc: "React + Node.js site for a business client.", tags: ["React", "Node.js"] },
-    { name: "SaltwaterCam", key: "saltwatercam", dom: "saltwatercam.com", desc: "React + Node.js site for a business client.", tags: ["React", "Node.js"] },
-    { name: "HiLoPros", key: "hilopros", dom: "hilopros-com.vercel.app", desc: "React + Node.js site, deployed on Vercel.", tags: ["React", "Node.js", "Vercel"] },
-    { name: "Danteswari Daily Needs", key: "danteswari", dom: "danteswaridailyneeds.com", desc: "MERN e-commerce for daily-needs retail.", tags: ["MERN", "E-commerce"], progress: true },
+    { name: "A Fresh Leaf", key: "afreshleaf", fh: 5000, dom: "afreshleaf.com", desc: "Company site.", tags: ["MERN stack", "SEO", "Google Search Console"] },
+    { name: "GoMunchz", key: "gomunchz", fh: 5000, dom: "gomunchz.com", desc: "MERN e-commerce with product catalog, cart, checkout and order management.", tags: ["MERN", "E-commerce"] },
+    { name: "Kingston K9 Rescue Reserve", key: "kingstonk9", fh: 5000, dom: "kingstonk9.com", desc: "React + Node.js site for a business client.", tags: ["React", "Node.js"] },
+    { name: "SaltwaterCam", key: "saltwatercam", fh: 2269, dom: "saltwatercam.com", desc: "React + Node.js site for a business client.", tags: ["React", "Node.js"] },
+    { name: "HiLoPros", key: "hilopros", fh: 5000, dom: "hilopros-com.vercel.app", desc: "React + Node.js site, deployed on Vercel.", tags: ["React", "Node.js", "Vercel"] },
+    { name: "Danteswari Daily Needs", key: "danteswari", fh: 4973, dom: "danteswaridailyneeds.com", desc: "MERN e-commerce for daily-needs retail.", tags: ["MERN", "E-commerce"], progress: true },
   ];
   const PN = LIVE.length, STEP = 360 / PN;
   const ring = $(".ring", proj);
-  const img = (p, kind, cls, sizes) => `<img class="${cls}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="assets/projects/${p.key}-${kind}.jpg" data-srcset="assets/projects/${p.key}-${kind}-720.jpg 720w, assets/projects/${p.key}-${kind}.jpg 1440w" data-sizes="${sizes}">`;
+  const img = (p, kind, cls, sizes) => `<img class="${cls}" width="1440" height="${kind === "hero" ? 900 : p.fh}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="${ASSETS}projects/${p.key}-${kind}.jpg" data-srcset="${ASSETS}projects/${p.key}-${kind}-720.jpg 720w, ${ASSETS}projects/${p.key}-${kind}.jpg 1440w" data-sizes="${sizes}">`;
   const SZ_RING = "(max-width:640px) 80vw, (max-width:1024px) 400px, 1440px", SZ_CAR = "80vw";
-  const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${img(p, "full", "f", sizes)}</div></div>`;
+  const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${img(p, "full", "f", sizes)}<i class="shine"></i></div></div>`;
   const infoBits = (p) => `<h3>${p.name}</h3><p class="d">${p.desc}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
   ring.innerHTML = LIVE.map((p, i) => `<article class="scr" tabindex="0" role="link" aria-label="${p.name}: ${i === 0 ? "open " + p.dom : "bring to front"}"><div class="face">${frame(p, SZ_RING)}
     <div class="info">${infoBits(p)}<button class="prev" type="button">Preview</button><a class="visit" href="https://${p.dom}" target="_blank" rel="noopener noreferrer">Visit site ↗</a></div><div class="dimv"></div></div></article>`).join("");
@@ -304,7 +403,10 @@ window.addEventListener("load", () => {
       });
       at.to(sent, { scale: 1.04, duration: 0.15, ...E }, 0.2);
       at.to(sent, { scale: 0.35, y: () => -vh() * 39, duration: 0.15, ease: "power2.inOut" }, 0.35);
-      const ARR = [0.4, 0.54, 0.68], DUR = 0.12;
+      /* Every animation here is scrubbed, so scrolling back up plays it exactly in reverse. On tablet and phone each card also gets a
+         hold: it is fully readable (scale 1, opacity 1, no rotation) for a stretch of scroll before the next card arrives or the fan starts. */
+      const ARR = C ? [0.4, 0.56, 0.71] : [0.4, 0.54, 0.68], DUR = C ? 0.1 : 0.12;
+      const FAN_AT = C ? 0.89 : 0.85, FLY_AT = C ? 0.95 : 0.92, FLY_D = C ? 0.05 : 0.08;
       const AGE = [{ scale: 0.92, rotation: -4, y: -20, opacity: 0.5 }, { scale: 0.85, rotation: -8, y: -40, opacity: 0.3 }];
       cardsA.forEach((c, i) => {
         at.fromTo(c, { x: () => vw() * 62, opacity: 0 }, { x: 0, opacity: 1, duration: DUR, ease: "power3.out" }, ARR[i]);
@@ -312,25 +414,32 @@ window.addEventListener("load", () => {
         cardsA.slice(0, i).forEach((o, j) => at.to(o, { ...AGE[i - 1 - j], duration: DUR, ease: "power2.out" }, ARR[i]));
       });
       at.to(icos, { opacity: 1, y: 0, duration: 0.05, stagger: 0.012, ease: "power2.out" }, ARR[2] + 0.02);
-      let counted = false;
-      at.call(() => {
-        if (counted) return; counted = true;
+      if (C) {
+        /* tablet and phone: the numbers count up with the scroll, so they count back down when you scroll up */
         $$(".c2 .num", about).forEach((n) => { const o = { v: 0 }, to = +n.dataset.to, dec = +n.dataset.dec, suf = n.dataset.suf;
-          gsap.to(o, { v: to, duration: 1.3, ease: "power2.out", onUpdate: () => (n.textContent = o.v.toFixed(dec) + suf), onComplete: () => (n.textContent = to.toFixed(dec) + suf) }); });
-      }, null, ARR[1] + 0.06);
+          n.textContent = (0).toFixed(dec) + suf;
+          at.to(o, { v: to, duration: 0.07, ease: "none", onUpdate: () => (n.textContent = o.v.toFixed(dec) + suf) }, ARR[1] + 0.03); });
+      } else {
+        let counted = false;                                               // desktop: count up once when card 02 has landed
+        at.call(() => {
+          if (counted) return; counted = true;
+          $$(".c2 .num", about).forEach((n) => { const o = { v: 0 }, to = +n.dataset.to, dec = +n.dataset.dec, suf = n.dataset.suf;
+            gsap.to(o, { v: to, duration: 1.3, ease: "power2.out", onUpdate: () => (n.textContent = o.v.toFixed(dec) + suf), onComplete: () => (n.textContent = to.toFixed(dec) + suf) }); });
+        }, null, ARR[1] + 0.06);
+      }
       const SPREAD = PH ? 20 : T ? 27 : 31;
       const FAN = [{ rotation: -10, x: () => -vw() * SPREAD }, { rotation: 0, x: 0 }, { rotation: 10, x: () => vw() * SPREAD }];
       cardsA.forEach((c, i) => {
-        at.to(c, { ...FAN[i], y: 0, scale: 1, opacity: 1, duration: 0.07, ease: "power2.inOut" }, 0.85)
-          .to(c, { y: () => -vh() * 115, opacity: 0, duration: 0.08, ease: "power2.in" }, 0.92 + i * 0.01);
+        at.to(c, { ...FAN[i], y: 0, scale: 1, opacity: 1, duration: 0.07, ease: "power2.inOut" }, FAN_AT)
+          .to(c, { y: () => -vh() * 115, opacity: 0, duration: FLY_D, ease: "power2.in" }, FLY_AT + i * 0.005);
       });
-      at.to([sent, ringS], { opacity: 0, duration: 0.1, ...E }, 0.9);
+      at.to([sent, ringS], { opacity: 0, duration: 0.1, ...E }, C ? 0.9 : 0.9);
 
       let topC = -1;
       const tilt = fine ? cardsA.map((c) => ({ qx: gsap.quickTo(c, "rotationX", { duration: 0.6, ease: "power3" }), qy: gsap.quickTo(c, "rotationY", { duration: 0.6, ease: "power3" }) })) : null;
       const reset = (i) => { if (!tilt) return; tilt[i].qx(0); tilt[i].qy(0); cardsA[i].classList.remove("lit"); };
       at.eventCallback("onUpdate", () => {
-        const p = at.progress(), n = p < 0.52 ? -1 : p < 0.66 ? 0 : p < 0.8 ? 1 : p < 0.85 ? 2 : -1;
+        const p = at.progress(), L = ARR.map((a) => a + DUR), n = p < L[0] ? -1 : p < L[1] ? 0 : p < L[2] ? 1 : p < FAN_AT ? 2 : -1;
         if (n !== topC) { if (topC >= 0) reset(topC); topC = n; }
       });
       let raf = 0, px = 0, py = 0;
@@ -565,15 +674,353 @@ window.addEventListener("load", () => {
 
   };
 
+  /* =========================================================================
+     PHONE + TABLET: scroll animations. Nothing is pinned except Projects on a landscape tablet.
+     Every scrubbed animation is tied to scroll position, so it reverses exactly when you scroll up.
+     Only transform and opacity (plus text colour for the word light-up) change on scroll.
+     ========================================================================= */
+  const buildCompact = (bp, dispose) => {
+    const PHN = bp === "phone", TL = bp === "tabl";
+    const P3 = PHN && innerWidth <= 640;                                   // 3D scroll motion: phones up to 640px wide only
+    const fine = !touch;
+    const on = (el, ev, fn, o) => { el.addEventListener(ev, fn, o); dispose.push(() => el.removeEventListener(ev, fn, o)); };
+    const vw = () => innerWidth / 100, vh = () => innerHeight / 100;
+    const sc = (trigger, start, end) => ({ trigger, start, end, scrub: true, invalidateOnRefresh: true });
+    const reveal = (sec) => {
+      const ins = $$("h2 .in", sec);
+      if (ins.length) gsap.from(ins, { yPercent: 110, stagger: 0.1, ease: "power3.out", scrollTrigger: sc(sec, "top 85%", "top 45%") });
+    };
+    const rise = (el, from = 28) => gsap.fromTo(el, { y: from, opacity: 0 }, { y: 0, opacity: 1, ease: "power2.out", scrollTrigger: sc(el, "top 96%", "top 76%") });
+
+    /* ---------------------------------------------------------------------
+       HOME: not pinned. Intro at most 1.8 s; on scroll PAVAN drifts left, NADIMPALLI right, the photo moves slower and fades.
+       --------------------------------------------------------------------- */
+    {
+      const CAP = 0.865, cyPct = innerHeight < 500 ? 0.56 : PHN ? 0.4 : 0.42;
+      const fit = () => {
+        const W = innerWidth, H = innerHeight;
+        allRows.forEach((r) => (r.style.fontSize = "100px"));
+        const fs = Math.min(100 * (W * 0.92) / rowsB[1].offsetWidth, (H * (H < 500 ? 0.5 : 0.8)) / (CAP * 2 + 0.1));
+        allRows.forEach((r) => (r.style.fontSize = fs + "px"));
+        const w2 = rowsB[1].offsetWidth, pitch = fs * (CAP + 0.055), cy = H * cyPct;
+        const y1 = cy - pitch / 2, y2 = cy + pitch / 2;
+        rowsB[0].style.top = rowsF[0].style.top = y1 + "px";
+        rowsB[1].style.top = rowsF[1].style.top = y2 + "px";
+        tag.style.top = (y2 + CAP * fs / 2 - CAP * fs * 0.06) + "px";
+        tag.style.right = ((W - w2) / 2) + "px";
+        v1.style.left = (W * 0.86) + "px"; v1.style.top = "0px"; v1.style.height = y1 + "px";
+        v2.style.left = (W * 0.1) + "px"; v2.style.top = y2 + "px"; v2.style.height = (H - y2) + "px";
+      };
+      gsap.set(allRows, { xPercent: -50, yPercent: -50 });
+      gsap.set(me, { xPercent: -50 });
+      fit();
+      ScrollTrigger.addEventListener("refreshInit", fit);
+      dispose.push(() => ScrollTrigger.removeEventListener("refreshInit", fit));
+      const SYM = "{}<>/=;#$%&*+[]()|~".split("");
+      const endScramble = (p) => { p.busy = false; p.bm.classList.remove("sc"); p.fm.classList.remove("sc"); p.cool = performance.now(); };
+      const scramble = (p, dur = 0.55) => {
+        if (p.busy) return;
+        p.busy = true; p.bm.classList.add("sc"); p.fm.classList.add("sc");
+        let n = 0;
+        p.tw = gsap.to({}, { duration: dur, ease: "none", onUpdate: () => { if (n++ % 3 === 0) p.bs.textContent = p.fs.textContent = SYM[(Math.random() * SYM.length) | 0]; }, onComplete: () => endScramble(p) });
+      };
+      dispose.push(() => pairs.forEach((p) => { if (p.tw) p.tw.kill(); if (p.busy) endScramble(p); }));
+      if (!introPlayed) {
+        introPlayed = true;
+        gsap.set(pairs.map((p) => p.bt), { yPercent: 115 });
+        gsap.set(me, { opacity: 0, scale: 1.04, transformOrigin: "50% 100%" });
+        gsap.set(wipe, { x: 0, xPercent: -100 }); gsap.set(wipeIn, { x: 0, xPercent: 100 });
+        gsap.set([tag, ...corners], { opacity: 0 });
+        gsap.set([v1, v2], { scaleY: 0, opacity: 0.3 });
+        const lt = gsap.timeline({ delay: 0.15 });
+        pairs.forEach((p, i) => {
+          const at = p.row === 0 ? i * 0.05 : 0.2 + (i - 5) * 0.05;
+          lt.to(p.bt, { yPercent: 0, duration: 0.7, ease: "power3.out" }, at).add(() => scramble(p, 0.55), at);
+        });
+        lt.to(me, { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" }, 0.2)
+          .to(wipe, { xPercent: 0, duration: 0.9, ease: "power2.inOut" }, 0.6)
+          .to(wipeIn, { xPercent: 0, duration: 0.9, ease: "power2.inOut" }, 0.6)
+          .to([v1, v2], { scaleY: 1, duration: 0.8, ease: "power2.out" }, 0.5)
+          .to([tag, ...corners], { opacity: 1, duration: 0.5, stagger: 0.05 }, 1.2);
+        lt.timeScale(Math.max(1, (lt.duration() + 0.15) / 1.7));            // never longer than 1.8 s
+        const GUARD = ["wheel", "touchstart", "keydown", "pointerdown"];
+        let done = false;
+        const end = () => { if (done) return; done = true; GUARD.forEach((ev) => removeEventListener(ev, finish)); };
+        const finish = () => { if (done) return; lt.progress(1); pairs.forEach((p) => { if (p.tw) p.tw.kill(); endScramble(p); }); end(); };
+        GUARD.forEach((ev) => addEventListener(ev, finish, { passive: true }));
+        lenis.on("scroll", () => { if (!done && lenis.scroll > 2) finish(); });
+        lt.eventCallback("onComplete", end);
+        dispose.push(() => { GUARD.forEach((ev) => removeEventListener(ev, finish)); });
+      } else {
+        gsap.set(pairs.map((p) => p.bt), { yPercent: 0 }); gsap.set(me, { opacity: 1, scale: 1 });
+        gsap.set(wipe, { xPercent: 0 }); gsap.set(wipeIn, { xPercent: 0 });
+        gsap.set([tag, ...corners], { opacity: 1 }); gsap.set([v1, v2], { scaleY: 1, opacity: 0.3 });
+      }
+      gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: { trigger: home, start: "top top", end: "bottom top", scrub: true, invalidateOnRefresh: true } })
+        .to([rowsB[0], rowsF[0]], { x: () => -vw() * 16 }, 0)
+        .to([rowsB[1], rowsF[1], tag], { x: () => vw() * 16 }, 0)
+        .to(me, { y: () => -vh() * 3 }, 0)
+        .fromTo(me, { opacity: 1 }, { opacity: 0.15, immediateRender: false }, 0.15);
+    }
+
+    /* ---------------------------------------------------------------------
+       ABOUT: the sentence builds word by word, then three sticky stacking cards
+       --------------------------------------------------------------------- */
+    {
+      const about = aboutEl, deck = $(".deck", about), astage = $(".astage", about), ringS = $(".ringS", about);
+      const cardsA = $$(".card", about), icos = $$(".ico", about), sw = $$(".w", sent), hot = $$(".hot", sent);
+      const RED = "#ff4b3a";
+      gsap.set(sw, { scale: 2.2, opacity: 0, y: () => vh() * 3 });
+      gsap.set(icos, { opacity: 0, y: 16 });
+      gsap.set($$(".edge", about), { scaleX: 0 });
+      const st = gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: sc(astage, "top 80%", "bottom 55%") });
+      sw.forEach((w, i) => st.to(w, { scale: 1, opacity: 1, y: 0, duration: 0.1, ease: "power3.out" }, i * 0.08));
+      hot.forEach((w) => {
+        const t = sw.indexOf(w) * 0.08 + 0.05;
+        st.to(w, { color: RED, duration: 0.06 }, t).to(w, { scale: 1.06, duration: 0.03, ease: "power1.out" }, 0.74).to(w, { scale: 1, duration: 0.03, ease: "power1.in" }, 0.77);
+      });
+      gsap.to(ringS, { rotation: 200, ease: "none", scrollTrigger: sc(astage, "top bottom", "bottom top") });
+      /* all three cards get the same height (the tallest one), so the stack lines up */
+      const sizeCards = () => { deck.style.removeProperty("--ch"); deck.style.setProperty("--ch", Math.ceil(Math.max(...cardsA.map((c) => c.offsetHeight))) + "px"); };
+      sizeCards();
+      ScrollTrigger.addEventListener("refreshInit", sizeCards);
+      dispose.push(() => { ScrollTrigger.removeEventListener("refreshInit", sizeCards); deck.style.removeProperty("--ch"); });
+      /* sticky stack: the card underneath scales to 0.94 and dims to 0.55 while the next one slides over it; the top card is always scale 1, opacity 1 */
+      const HOLD = 72, STEPV = 14;
+      const nat = (j) => deck.getBoundingClientRect().top + window.scrollY + j * (cardsA[0].offsetHeight + parseFloat(getComputedStyle(cardsA[0]).marginBottom));
+      [0, 1].forEach((j) => gsap.to(cardsA[j], { scale: 0.94, opacity: 0.55, ease: "none",
+        scrollTrigger: { start: () => nat(j + 1) - (HOLD + j * STEPV + cardsA[0].offsetHeight), end: () => nat(j + 1) - (HOLD + (j + 1) * STEPV), scrub: true, invalidateOnRefresh: true } }));
+      cardsA.forEach((c) => gsap.to($(".edge", c), { scaleX: 1, ease: "none", scrollTrigger: sc(c, "top 88%", "top 55%") }));
+      $$(".c2 .num", about).forEach((n) => {
+        const o = { v: 0 }, to = +n.dataset.to, dec = +n.dataset.dec, suf = n.dataset.suf;
+        n.textContent = (0).toFixed(dec) + suf;
+        gsap.to(o, { v: to, ease: "none", onUpdate: () => (n.textContent = o.v.toFixed(dec) + suf), scrollTrigger: sc(cardsA[1], "top 90%", "top 45%") });
+      });
+      gsap.to(icos, { opacity: 1, y: 0, ease: "none", stagger: 0.2, scrollTrigger: sc(cardsA[2], "top 80%", "top 30%") });
+      ScrollTrigger.create({ trigger: about, start: "top bottom", end: "bottom top", onToggle: (self) => about.classList.toggle("moving", self.isActive) });
+      dispose.push(() => about.classList.remove("moving"));
+    }
+
+    /* ---------------------------------------------------------------------
+       SKILLS: two marquees that speed up with scroll speed, skill groups below
+       --------------------------------------------------------------------- */
+    {
+      const skills = $("#skills"); reveal(skills);
+      let off = 0, oneW = 1;
+      const measure = () => { oneW = r1.scrollWidth / 3; };
+      measure(); on(window, "resize", measure);
+      let skillsOn = false;
+      const io = new IntersectionObserver((e) => (skillsOn = e[0].isIntersecting)); io.observe(skills);
+      const tick = (t, dt) => {
+        if (!skillsOn) return;
+        off += (50 + lenis.velocity * 55) * (dt / 1000);
+        const m = ((off % oneW) + oneW) % oneW;
+        gsap.set(r1, { x: -m }); gsap.set(r2, { x: -oneW + m });
+      };
+      gsap.ticker.add(tick);
+      dispose.push(() => { gsap.ticker.remove(tick); io.disconnect(); gsap.set([r1, r2], { clearProps: "transform" }); });
+      $$(".sgroups > div", skills).forEach((g) => rise(g, 32));
+    }
+
+    /* ---------------------------------------------------------------------
+       EXPERIENCE: a line on the left draws with the scroll, job cards slide in from the right, the dot of the job in view pulses red
+       --------------------------------------------------------------------- */
+    {
+      const exp = expEl, jobs = $(".jobs", exp), fill = $(".cline i", jobs), cdots = $$(".cdot", jobs);
+      reveal(exp);
+      gsap.fromTo(fill, { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: sc(jobs, "top 70%", "bottom 60%") });
+      items.forEach((it, i) => {
+        if (P3) {
+          /* depth timeline: below centre the card lies back (rotateX 55, translateZ -160, opacity .3), at the centre of the screen it is flat,
+             then it tilts away (rotateX -25, opacity .6) as it reaches the top. The year range behind it moves a little slower (parallax). */
+          const card = $(".jc", it), ghost = $(".yrbg", it);
+          gsap.set(card, { transformPerspective: 1000, transformOrigin: "50% 50%" });
+          gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: sc(it, "center bottom", "center top") })
+            .fromTo(card, { rotationX: 55, z: -160, opacity: 0.3 }, { rotationX: 0, z: 0, opacity: 1, duration: 1 })
+            .to(card, { rotationX: -25, opacity: 0.6, duration: 1 });
+          gsap.fromTo(ghost, { y: -36 }, { y: 36, ease: "none", scrollTrigger: sc(it, "top bottom", "bottom top") });
+          ScrollTrigger.create({ trigger: it, start: "top 58%", end: "bottom 42%", toggleClass: { targets: cdots[i], className: "on" } });
+        } else {
+          gsap.fromTo(it, { x: () => vw() * 34, opacity: 0 }, { x: 0, opacity: 1, ease: "power2.out", scrollTrigger: sc(it, "top 96%", "top 72%") });
+          ScrollTrigger.create({ trigger: it, start: "top 62%", end: "bottom 38%", toggleClass: { targets: cdots[i], className: "on" } });
+        }
+      });
+      dispose.push(() => cdots.forEach((d) => d.classList.remove("on")));
+    }
+
+    /* ---------------------------------------------------------------------
+       PROJECTS: phone and tablet portrait = swipe carousel; tablet landscape = a smaller, flatter 3D ring (the only pinned part)
+       --------------------------------------------------------------------- */
+    {
+      reveal(proj);
+      if (TL) {
+        const RADIUS = 540, MIN = 0.76;
+        cards.forEach((c, i) => (c.style.transform = `rotateY(${i * STEP}deg) translateZ(${RADIUS}px)`));
+        const heroes = $$(".vp .h", ring);
+        const io = new IntersectionObserver((e, o) => { if (e.some((x) => x.isIntersecting)) { heroes.forEach(loadImg); o.disconnect(); } }, { rootMargin: "1500px 0px" }); io.observe(proj);
+        dispose.push(() => io.disconnect());
+        const spin = { r: 0 };
+        let front = 0, hover = -1;
+        const setFront = (i) => {
+          cards.forEach((c, j) => c.classList.toggle("front", j === i));
+          loadImg($(".vp .h", cards[i])); loadImg($(".vp .f", cards[i]));
+          if (hover !== -1 && hover !== i) { preview(cards[hover]).stop(); hover = -1; }
+          cards.forEach((c, j) => { if (j !== i) { const p = previews.get(c); if (p && p.on) p.stop(); } });
+          front = i;
+        };
+        const light = () => {
+          faces.forEach((f, i) => {
+            const a = (((i * STEP + spin.r) % 360) + 540) % 360 - 180;
+            const k = Math.max(0, Math.cos((a * Math.PI) / 180)), w = Math.pow(k, 1.6);
+            gsap.set(f, { scale: MIN + (1 - MIN) * w });
+            dimvs[i].style.opacity = (0.62 * (1 - w)).toFixed(3);
+          });
+          const nf = Math.min(PN - 1, Math.max(0, Math.round(-spin.r / STEP)));
+          if (nf !== front) setFront(nf);
+        };
+        gsap.set(ring, { z: -RADIUS });
+        const pt = gsap.timeline({ scrollTrigger: { trigger: proj, start: "top top", end: "+=" + Math.round(PN * 56) + "%", pin: true, scrub: true, anticipatePin: 1, invalidateOnRefresh: true } })
+          .to(spin, { r: -STEP * (PN - 1), ease: "none", duration: 1, onUpdate: () => { gsap.set(ring, { rotationY: spin.r }); light(); } });
+        light(); setFront(0);
+        cards.forEach((c, i) => {
+          const toFront = () => { const st = pt.scrollTrigger; lenis.scrollTo(st.start + (st.end - st.start) * (i / (PN - 1)), { duration: 1.3 }); };
+          const open = () => window.open("https://" + LIVE[i].dom, "_blank", "noopener,noreferrer");
+          if (fine) {
+            on(c, "mouseenter", () => { if (i === front) { hover = i; preview(c).start(); } });
+            on(c, "mouseleave", () => { if (hover === i) { preview(c).stop(); hover = -1; } });
+          }
+          on(c, "click", (e) => { if (e.target.closest(".visit,.prev")) return; if (i === front) open(); else toFront(); });
+          on(c, "keydown", (e) => { if (e.key === "Enter") { if (i === front) open(); else toFront(); } });
+        });
+        dispose.push(() => cards.forEach((c) => { const p = previews.get(c); if (p && p.on) p.stop(); c.classList.remove("front"); }));
+      } else {
+        /* swipe carousel (scroll-snap): the centre card is scale 1, the side cards 0.92 and dimmed; dots show where you are */
+        const heroes = $$(".vp .h", car);
+        const io = new IntersectionObserver((e, o) => { if (e.some((x) => x.isIntersecting)) { heroes.forEach(loadImg); o.disconnect(); } }, { rootMargin: "1200px 0px" }); io.observe(proj);
+        dispose.push(() => io.disconnect());
+        let cur = -1, raf = 0;
+        const update = () => {
+          raf = 0;
+          const mid = track.scrollLeft + track.clientWidth / 2;
+          let best = 0, bd = 1e9;
+          slides.forEach((s, i) => {
+            const sd = (s.offsetLeft + s.offsetWidth / 2 - mid) / (s.offsetWidth + 16), d = Math.abs(sd) * (s.offsetWidth + 16), k = Math.min(1, Math.abs(sd));
+            /* phones up to 640px: coverflow (side cards turn toward the centre and sink back); otherwise the flat scale + dim */
+            if (P3) gsap.set(s, { transformPerspective: 900, rotationY: -Math.sign(sd) * 38 * k, z: -120 * k, scale: 1 - 0.12 * k, opacity: 1 - 0.4 * k });
+            else gsap.set(s, { scale: 1 - 0.08 * k, opacity: 1 - 0.45 * k });
+            if (d < bd) { bd = d; best = i; }
+          });
+          if (best === cur) return;
+          if (P3 && cur !== -1) gsap.fromTo($(".shine", slides[best]), { xPercent: -130 }, { xPercent: 260, duration: 0.9, ease: "power2.inOut" });   // one soft sweep when a card becomes the centre card
+          cur = best; pdots.forEach((d, i) => d.classList.toggle("on", i === best));
+          slides.forEach((s, i) => { if (i !== best) { const p = previews.get(s); if (p && p.on) p.stop(); } });
+        };
+        on(track, "scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+        ScrollTrigger.addEventListener("refreshInit", update);
+        dispose.push(() => ScrollTrigger.removeEventListener("refreshInit", update));
+        pdots.forEach((d, i) => {
+          const go = () => track.scrollTo({ left: slides[i].offsetLeft - (track.clientWidth - slides[i].offsetWidth) / 2, behavior: "smooth" });
+          on(d, "click", go); on(d, "keydown", (e) => { if (e.key === "Enter") go(); });
+        });
+        update();
+        gsap.fromTo(car, { y: 40, opacity: 0 }, { y: 0, opacity: 1, ease: "power2.out", scrollTrigger: sc(proj, "top 85%", "top 45%") });
+        dispose.push(() => slides.forEach((s) => { const p = previews.get(s); if (p && p.on) p.stop(); }));
+      }
+    }
+
+    /* ---------------------------------------------------------------------
+       PROJECTS: MORE BUILDS (stacked on phone, 2 + 1 on tablet): the cards flip up one by one
+       --------------------------------------------------------------------- */
+    {
+      const more = $("#more");
+      if (P3) {
+        /* flip cards: as a card scrolls into the middle it turns from the front (icon + name) to the back (description + tech pills); scrolling up turns it back; a tap flips it too */
+        $$(".mb", more).forEach((mb) => {
+          const inner = $(".mbi", mb), st = { p: 0, b: 0 }, apply = () => gsap.set(inner, { rotationY: (st.p + st.b) * 180 });
+          gsap.set(inner, { transformPerspective: 1000 });
+          ScrollTrigger.create({ trigger: mb, start: "center 88%", end: "center 50%", invalidateOnRefresh: true, onUpdate: (self) => { st.p = self.progress; apply(); }, onRefresh: (self) => { st.p = self.progress; apply(); } });
+          const flip = () => gsap.to(st, { b: st.b ? 0 : 1, duration: 0.6, ease: "power2.inOut", onUpdate: apply });
+          on(mb, "click", flip); on(mb, "keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
+        });
+      } else $$(".mb", more).forEach((c) => gsap.fromTo(c, { rotationX: 70, opacity: 0 }, { rotationX: 0, opacity: 1, ease: "power2.out", scrollTrigger: sc(c, "top 94%", "top 62%") }));
+      ScrollTrigger.create({ trigger: more, start: "top bottom", end: "bottom top", onToggle: (self) => more.classList.toggle("moving", self.isActive) });
+    }
+
+    /* ---------------------------------------------------------------------
+       EDUCATION: the years count up once, the cards rise in
+       --------------------------------------------------------------------- */
+    {
+      const edu = $("#edu"); reveal(edu);
+      if (P3) {
+        /* unfold: each degree card opens from rotateX(-90deg) (hinged at the top) to flat; the outlined year behind it rises from translateZ(-200px) */
+        $$("#edu .edi").forEach((w) => {
+          const card = $(".school", w), ghost = $(".ghost", w);
+          gsap.set([card, ghost], { transformPerspective: 1000 });
+          gsap.fromTo(card, { rotationX: -90 }, { rotationX: 0, ease: "none", scrollTrigger: sc(w, "top 95%", "top 55%") });
+          gsap.fromTo(card, { opacity: 0 }, { opacity: 1, ease: "none", scrollTrigger: sc(w, "top 95%", "top 80%") });
+          gsap.fromTo(ghost, { z: -200, opacity: 0 }, { z: 0, opacity: 0.55, ease: "none", scrollTrigger: sc(w, "top 100%", "top 55%") });
+          gsap.fromTo($(".ghost.lit", w), { z: -200, opacity: 0 }, { z: 0, opacity: 0, ease: "none", scrollTrigger: sc(w, "top 100%", "top 55%") });
+          gsap.fromTo($(".ghost.lit", w), { opacity: 0 }, { opacity: 1, ease: "none", scrollTrigger: sc(w, "top 60%", "top 28%") });   // the year lights up red as the card comes to rest
+          gsap.fromTo($(".eedge", w), { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: sc(w, "top 70%", "top 38%") });          // a red line draws across the top of the card
+          gsap.fromTo(ghost, { y: 28 }, { y: -28, ease: "none", scrollTrigger: sc(w, "top bottom", "bottom top") });                      // the year moves slower than the card
+          gsap.fromTo($(".espine", w), { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: sc(w, "top 70%", "bottom 55%") });
+        });
+      } else {
+        $$(".school", edu).forEach((s) => rise(s, 48));
+        $$(".yr", edu).forEach((el) => {
+          const to = +el.dataset.to, o = { n: 0 };
+          el.textContent = "0";
+          ScrollTrigger.create({ trigger: el, start: "top 88%", once: true, onEnter: () => gsap.to(o, { n: to, duration: 1.4, ease: "power2.out", snap: { n: 1 }, onUpdate: () => (el.textContent = o.n) }) });
+        });
+      }
+    }
+
+    /* ---------------------------------------------------------------------
+       RESUME: the title reveals behind a mask, the buttons rise in
+       --------------------------------------------------------------------- */
+    {
+      const res = $("#resume");
+      gsap.fromTo($(".m-in", res), { yPercent: 110 }, { yPercent: 0, ease: "power3.out", scrollTrigger: sc(res, "top 80%", "top 40%") });
+      if (P3) {
+        /* desk to hand: the sheet lies on a desk (rotateX 60, scale .85) and lifts to face you as you scroll; the buttons rise in after it */
+        const sheet = $(".sheet", res);
+        gsap.set(sheet, { transformPerspective: 1000, transformOrigin: "50% 100%" });
+        gsap.fromTo(sheet, { rotationX: 60, scale: 0.85 }, { rotationX: 0, scale: 1, ease: "none", scrollTrigger: sc(sheet, "top 92%", "center 55%") });
+      }
+      $$(".btn, .txt", res).forEach((el) => rise(el, 24));
+    }
+
+    /* ---------------------------------------------------------------------
+       CONTACT: "SAY HELLO" scales from 0.8 to 1, then the email, links, buttons and form fields rise one by one
+       --------------------------------------------------------------------- */
+    {
+      const con = $("#contact");
+      if (P3) {
+        /* standing letters: each letter swings up from rotateX(-90deg), hinged at the bottom, one after another */
+        const lt3 = $$(".sayp .lt3", con);
+        gsap.set(lt3, { rotationX: -90, opacity: 0, transformPerspective: 800 });                 // every letter starts lying down, before the scroll reaches it
+        gsap.to(lt3, { rotationX: 0, opacity: 1, ease: "none", stagger: 0.12, scrollTrigger: sc(con, "top 88%", "top 35%") });
+      } else gsap.fromTo($("h2", con), { scale: 0.8 }, { scale: 1, ease: "power2.out", scrollTrigger: sc(con, "top 85%", "top 35%") });
+      $$(".mail > *", con).forEach((el) => rise(el));
+      const reach = $("#reach");
+      $$(".left h2, .left .p, .acts .btn, .addr, .form h3, .form .f, .form .send", reach).forEach((el) => {
+        /* phones up to 640px: the form fields fold down (rotateX -70deg to 0, hinged at the top) one by one */
+        if (P3 && el.classList.contains("f")) gsap.fromTo(el, { rotationX: -70, opacity: 0, transformPerspective: 800 }, { rotationX: 0, opacity: 1, ease: "none", scrollTrigger: sc(el, "top 96%", "top 72%") });
+        else rise(el);
+      });
+    }
+  };
+
   const mm = gsap.matchMedia();
   mm.add({
     desk: "(min-width:1025px) and (min-height:501px)",
-    tab: "(min-width:641px) and (max-width:1024px) and (min-height:501px)",
+    tabl: "(min-width:641px) and (max-width:1024px) and (min-height:501px) and (orientation:landscape)",
+    tabp: "(min-width:641px) and (max-width:1024px) and (min-height:501px) and (orientation:portrait)",
     phone: "(max-width:640px), (max-height:500px)",
   }, (ctx) => {
-    const c = ctx.conditions, bp = c.desk ? "desk" : c.tab ? "tab" : "phone", dispose = [];
+    const c = ctx.conditions, bp = c.desk ? "desk" : c.tabl ? "tabl" : c.tabp ? "tabp" : "phone", dispose = [];
     document.documentElement.dataset.bp = bp;
-    build(bp, dispose);
+    if (bp === "desk") build(bp, dispose); else buildCompact(bp, dispose);       // desktop code is unchanged
     return () => dispose.forEach((f) => f());
   });
 

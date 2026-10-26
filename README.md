@@ -15,6 +15,8 @@ The real site will be built in **Step 5** with the scroll-starter kit (Next.js),
 Eight scroll sections: Home, About Me, Technical Skills, Experience, Featured Projects (a 3D ring of real project screenshots, plus "More builds"), Education, Resume and Contact (with a "Reach me" form).
 It adapts to three screen sizes: desktop (1025px and wider), tablet (641 to 1024px) and phone (640px and narrower). Mouse and trackpad get smooth scrolling; phones and tablets use their normal touch scrolling.
 
+On phone and tablet the page uses a flow layout with nothing pinned (only the Projects ring pins, on a landscape tablet): a top bar with a full-screen menu, sticky stacking cards in About, a swipe carousel for projects, and a floating "Let's talk" button. The desktop design is unchanged. The layout is chosen by `data-bp` on the `<html>` tag (`desk`, `tabl`, `tabp` or `phone`), which a small script in `index.html` sets before the first paint.
+
 ## Folder map
 
 ```
@@ -27,7 +29,7 @@ portfolio-demo/
   vendor/               gsap.min.js, ScrollTrigger.min.js, lenis.min.js, lenis.css (copies from the kit's node_modules)
   assets/img/           pavan-portrait.png (not edited)
   assets/projects/      screenshots of the six live sites: <name>-hero.jpg, <name>-full.jpg and small 720px copies (-720)
-  assets/resume/        (not in this repo: the resume PDF is added separately)
+  assets/resume/        resume-page1.jpg (the resume PDF is added separately, not in this repo)
 ```
 
 ## Notes

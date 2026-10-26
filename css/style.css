@@ -220,139 +220,232 @@ html.touch #home .htag{animation:idle-float 6s ease-in-out -2s infinite}
 html.touch #more .mb:hover{translate:0 0}
 .btn,#reach button.btn,#proj .prev,#proj .visit{touch-action:manipulation}
 
-/* ---------- tablet and phone ---------- */
-@media (max-width:1024px),(max-height:500px){
-  .meta{font-size:10px}
-  #home .me{height:calc(80*var(--u))}
-  #home .corner{font-size:12px}
-  #about .sent{font-size:10vw}
-  #about .ringS{width:calc(56*var(--u));height:calc(56*var(--u));margin:calc(-28*var(--u)) 0 0 calc(-28*var(--u))}
-  #about .ringI text{font-size:30px}
-  #about .card{width:60vw;height:calc(62*var(--u));left:-30vw;top:calc(-31*var(--u));padding:22px}
-  #about .c2 .num{font-size:min(calc(11*var(--u)),84px)}
-  .tag{font-size:calc(4.6*var(--u));padding:calc(.7*var(--u)) 2.2vw;margin-right:1.2vw}
-  #skills h2{font-size:13vw;left:5vw}
-  #exp h2{font-size:12vw;right:5vw}
-  #exp .item{width:62vw}
-  #proj h2{font-size:9vw;left:5vw}
-  #proj .stage{perspective:2600px}
-  #proj .ring{top:56%}
-  #proj .scr{--cw:400px;--ch:440px}
-  #proj .info h3{font-size:25px}
-  #proj .visit{padding:12px 16px;font-size:14px}
-  #proj .scr .info{padding-bottom:54px}
-  #proj .scr .tags{max-width:100%}
-  #proj .scr .prev{padding:12px 14px;right:124px}
-  #more,#edu,#reach{height:auto;min-height:calc(100*var(--u))}
-  #more{padding:100px 4vw 70px}
-  #more .lab{position:static;margin-bottom:18px}
-  #more .mrow{position:static;margin:0;grid-template-columns:1fr 1fr;gap:16px;perspective:1000px}
-  #more .mb:nth-child(3){grid-column:1/-1}
-  #more .mb{min-height:0}
-  #more .mb .ico2{margin-bottom:18px}
-  #edu{padding:100px 5vw 80px;display:flex;flex-direction:column;gap:calc(5*var(--u))}
-  #edu h2{position:static;font-size:11vw;text-align:left}
-  #edu .school{position:relative;left:auto;right:auto;top:auto!important;flex-direction:column;align-items:flex-start;gap:6px;padding-top:14px}
-  #edu .yr{font-size:16vw;min-width:0}
-  #edu .school h3{font-size:calc(4*var(--u))}
-  #resume h2{font-size:24vw;top:calc(14*var(--u))}
-  #resume .btns{left:5vw;right:5vw;top:calc(58*var(--u));display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-  #resume .btn{margin:0;min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:0 26px;font-size:17px}
-  #resume .btn.o{padding:0 24px}
-  #resume .txt{top:calc(80*var(--u))}
-  #contact .mail .big{font-size:min(calc(6.6*var(--u)),6vw)}
-  #contact .mail .tag{font-size:min(calc(3.2*var(--u)),3.2vw)}
-  #reach{padding:100px 5vw 80px;display:flex;flex-direction:column;gap:30px}
-  #reach .lab{position:static;margin-bottom:-10px}
-  #reach .left{position:static;width:auto}
-  #reach h2{font-size:min(calc(15*var(--u)),20vw)}
-  #reach .form{position:static;width:100%}
-  #reach .btn{min-height:52px}
-}
-/* ---------- phone ---------- */
-@media (max-width:640px),(max-height:500px){
-  .meta.t{top:56px}
-  .meta{font-size:9.5px;letter-spacing:.08em}
-  #proj .meta.b{display:none}
-  #home .me{height:calc(70*var(--u))}
-  #home .c-tl{top:64px;left:5vw}
-  #home .c-tr{display:none}
-  #home .c-bl{left:5vw;bottom:54px}
-  #home .c-br{left:5vw;right:auto;bottom:30px}
-  #home .htag{white-space:normal;max-width:60vw;font-size:13px;padding:9px 12px;line-height:1.25;text-align:left}
-  #about .sent{font-size:12vw}
-  #about .ringS{width:62vw;height:62vw;margin:-31vw 0 0 -31vw}
-  #about .ringI text{font-size:27px}
-  #about .card{width:86vw;height:calc(64*var(--u));left:-43vw;top:calc(-32*var(--u));padding:18px 18px}
-  #about .card h3{font-size:min(calc(4.2*var(--u)),34px);margin:6px 0 10px}
-  #about .c1 .ph{height:38%}
-  #about .c1 p{font-size:12.5px;line-height:1.45;margin-top:10px}
-  #about .c2 .num{font-size:min(calc(10*var(--u)),64px);min-width:38%}
-  #about .c2 .lbl{font-size:11px}
-  #about .c3 .now{font-size:17px;margin:2.5vh 0 3vh}
-  #about .c3 .loc{font-size:min(calc(4.6*var(--u)),30px)}
-  #about .ico svg{width:30px;height:30px}
-  #about .ico span{font-size:9px}
-  .tag{font-size:calc(3.4*var(--u));padding:calc(.6*var(--u)) 4vw;margin-right:2.5vw;border-width:1.5px}
-  #skills h2{font-size:15vw;top:calc(14*var(--u))}
-  #exp h2{font-size:17vw;left:5vw;right:auto;text-align:left;top:calc(11*var(--u))}
-  #exp .line,#exp .track{left:6vw}
-  #exp .dot{left:calc(6vw - 6px)}
-  #exp .item{left:13vw;width:82vw}
-  #exp .item h3{font-size:calc(3.3*var(--u))}
-  #exp .item ul{font-size:11.5px;line-height:1.35}
-  #proj{height:auto;min-height:calc(100*var(--u));padding:96px 0 40px}
-  #proj h2{position:static;font-size:13vw;margin:0 5vw 22px}
-  #proj .stage{display:none}
-  #proj .pcar{display:block}
-  #proj .ptrack{display:flex;gap:4vw;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 10vw 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
-  #proj .ptrack::-webkit-scrollbar{display:none}
-  #proj .slide{flex:0 0 80vw;scroll-snap-align:center;scroll-snap-stop:always}
-  #proj .slide .win{background:#161617;border:2px solid #3a3a3e;border-radius:10px;overflow:hidden}
-  #proj .slide .info{padding:14px 2px 0}
-  #proj .slide .info h3{font-size:26px}
-  #proj .slide .info .d{font-size:13px}
-  #proj .slide .acts{display:flex;gap:10px;margin-top:16px}
-  #proj .slide .visit{display:inline-flex;position:static;align-items:center;min-height:44px;padding:0 18px;font-size:14px}
-  #proj .slide .prev{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;position:static}
-  #proj .pdots{display:flex;justify-content:center;gap:9px;margin-top:18px}
-  #proj .pdots i{width:8px;height:8px;border-radius:50%;background:#3a3a3e;border:0;padding:0;transition:background .2s,transform .2s}
-  #proj .pdots i.on{background:var(--acc);transform:scale(1.35)}
-  #more{padding:96px 5vw 70px}
-  #more .mrow{display:flex;flex-direction:column}
-  #more .mb{padding:22px}
-  #more .mb h3{font-size:34px}
-  #edu .yr{font-size:22vw}
-  #resume h2{font-size:28vw}
-  #resume .btns{flex-direction:column;flex-wrap:nowrap;top:calc(56*var(--u))}
-  #resume .btn{width:100%}
-  #resume .txt{top:calc(86*var(--u))}
-  #contact .mail{top:calc(38*var(--u))}
-  #contact .mail .tag{display:block;width:max-content;max-width:88vw;margin:0 auto 10px;font-size:4.2vw;white-space:normal;word-break:break-all;padding:8px 14px}
-  #contact .mail .big{font-size:5.8vw;word-break:break-all}
-  #reach .acts{flex-direction:column;align-items:stretch}
-  #reach .btn{width:100%;display:flex;justify-content:center;align-items:center}
-  #reach .copied{text-align:center}
-  #reach .form{padding:22px 18px}
-  #reach .f input,#reach .f textarea{font-size:16px}
-  #reach .send{width:100%;align-self:stretch;min-height:52px}
-}
-/* ---------- short screens (a phone held sideways) ---------- */
+/* ---- 3D scroll motion helpers: hidden everywhere except phones up to 640px wide (see the rules at the very end) ---- */
+.yrbg,.ghost,.sheet,.sayp,.shine,.jdate,.etop,.eedge,.espine{display:none}
+.mbi,.mbf,.mbk,.edi{display:contents}
+
+/* ===================== PHONE + TABLET (only when data-bp is not "desk"; desktop above is unchanged) =====================
+   Spacing uses only the 8px-grid tokens below. Side gutters: phone 20px, tablet 32px (plus safe areas).
+   Sections are min-height 100svh (never a fixed 100vh) with 72px (phone) / 96px (tablet) top and bottom padding. */
+html:not([data-bp="desk"]){--s1:4px;--s2:8px;--s3:12px;--s4:16px;--s6:24px;--s8:32px;--s12:48px;--s16:64px;--s24:96px;--g:20px;--gl:max(var(--g),env(safe-area-inset-left,0px));--gr:max(var(--g),env(safe-area-inset-right,0px));--py:72px;--bar:64px;--card-r:20px;--t-body:16px;--t-display:clamp(44px,13vw,96px);--t-title:clamp(32px,9vw,64px)}
+html[data-bp^="tab"]{--g:32px;--py:96px;--card-r:22px;--t-body:17px}
+html.menu-open,html.menu-open body{overflow:hidden}
+/* ---- top bar, full-screen menu, floating "Let's talk" ---- */
+.tb,.mnav,.lets{display:none}
+html:not([data-bp="desk"]) .tb{display:flex;position:fixed;top:0;left:0;right:0;z-index:960;height:calc(var(--bar) + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) var(--gr) 0 var(--gl);align-items:center;justify-content:space-between;background:#0e0e0f;border-bottom:1px solid #2c2c2e;transition:transform .3s ease}
+html:not([data-bp="desk"]) .tb.hide{transform:translateY(-100%)}
+html:not([data-bp="desk"]) .tb .brand{display:flex;align-items:center;min-height:48px;font:400 22px/1 var(--disp);letter-spacing:.02em;text-transform:uppercase;color:var(--fg);text-decoration:none}
+html:not([data-bp="desk"]) .tb .mbtn{min-width:48px;min-height:48px;padding:0 var(--s4);border:1px solid #3a3a3e;border-radius:99px;background:none;color:var(--fg);font:600 14px/1 var(--body);cursor:pointer}
+html:not([data-bp="desk"]) .mnav{display:flex;flex-direction:column;justify-content:center;gap:var(--s2);position:fixed;inset:0;z-index:950;padding:calc(var(--bar) + var(--s6)) var(--gr) var(--s16) var(--gl);background:#0e0e0f;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
+html:not([data-bp="desk"]) .mnav.open{opacity:1;visibility:visible;transition:opacity .3s ease}
+html:not([data-bp="desk"]) .mnav a{display:block;min-height:48px;font:400 clamp(34px,10vw,64px)/1.15 var(--disp);text-transform:uppercase;color:var(--fg);text-decoration:none;opacity:0;transform:translateY(40px);transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .4s ease}
+html:not([data-bp="desk"]) .mnav.open a{opacity:1;transform:none;transition-delay:calc(var(--i)*.06s + .1s)}
+html:not([data-bp="desk"]) .lets{display:flex;align-items:center;position:fixed;right:var(--gr);bottom:calc(var(--s4) + env(safe-area-inset-bottom,0px));z-index:880;min-height:48px;padding:0 var(--s6);border-radius:99px;background:var(--acc);color:#111;font:700 15px/1 var(--body);text-decoration:none;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+html:not([data-bp="desk"]) .lets.show{opacity:1;transform:none;pointer-events:auto}
+/* ---- every section: flow layout ---- */
+html:not([data-bp="desk"]) body{font-size:var(--t-body);line-height:1.6}
+html:not([data-bp="desk"]) .sec{display:flex;flex-direction:column;height:auto;min-height:calc(100*var(--u));padding:var(--py) var(--gr) var(--py) var(--gl);overflow:hidden;overflow:clip}
+html:not([data-bp="desk"]) .meta{position:static;display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s4);font-size:12px;letter-spacing:.1em;line-height:1.6}
+html:not([data-bp="desk"]) .meta.t{margin-bottom:var(--s8)}
+html:not([data-bp="desk"]) .meta.t span:last-child{display:none}
+html:not([data-bp="desk"]) .meta.b{margin-top:auto;padding-top:var(--s12)}
+html:not([data-bp="desk"]) .meta a{display:inline-block;min-height:24px}
+html:not([data-bp="desk"]) .h3w .red{display:none}
+/* ---- Home: a full-screen stage ---- */
+html:not([data-bp="desk"]) #home{display:block;height:calc(100*var(--u));min-height:0;padding:0}
+html:not([data-bp="desk"]) #home .me{width:100vw;height:calc(68*var(--u));bottom:var(--s24);object-fit:cover;object-position:34% 100%}
+html:not([data-bp="desk"]) #home .corner{font-size:12px;letter-spacing:.1em;line-height:1.4}
+html:not([data-bp="desk"]) #home .c-tl{left:var(--gl);top:calc(var(--bar) + var(--s4) + env(safe-area-inset-top,0px))}
+html:not([data-bp="desk"]) #home .c-tr{display:none}
+html:not([data-bp="desk"]) #home .c-bl{left:var(--gl);bottom:calc(var(--s8) + var(--s6))}
+html:not([data-bp="desk"]) #home .c-br{left:var(--gl);right:auto;bottom:var(--s8)}
+html:not([data-bp="desk"]) #home .htag{white-space:normal;max-width:min(62vw,360px);padding:var(--s2) var(--s3);font-size:14px;line-height:1.35;text-align:left}
+/* ---- About: sentence, then three sticky stacking cards ---- */
+html:not([data-bp="desk"]) #about{overflow:hidden;overflow:clip}
+html:not([data-bp="desk"]) #about .astage{position:relative;display:flex;align-items:center;justify-content:center;min-height:calc(86*var(--u));margin-bottom:var(--s12)}
+html:not([data-bp="desk"]) #about .ringS{--rs:min(88vw,60svh);left:50%;top:50%;width:var(--rs);height:var(--rs);margin:calc(var(--rs)/-2) 0 0 calc(var(--rs)/-2)}
+html[data-bp="tabp"] #about .ringS{--rs:min(70vw,56svh)}
+html:not([data-bp="desk"]) #about .ringI text{font-size:30px}
+html:not([data-bp="desk"]) #about .sent{position:relative;left:auto;right:auto;top:auto;margin:0;font-size:clamp(40px,12vw,76px)}
+html[data-bp^="tab"] #about .sent{font-size:clamp(56px,10vw,96px)}
+html:not([data-bp="desk"]) #about .deck{position:relative;left:auto;top:auto;width:100%;height:auto;display:flex;flex-direction:column}
+html:not([data-bp="desk"]) #about .card{position:sticky;left:auto;top:calc(72px + var(--i,0)*14px);width:100%;height:auto;min-height:var(--ch,0px);margin:0 0 var(--s24);padding:var(--s6);border-radius:var(--card-r);transform-origin:50% 0}
+html[data-bp^="tab"] #about .card{width:70vw;margin-left:auto;margin-right:auto;margin-bottom:var(--s24)}
+html:not([data-bp="desk"]) #about .card:last-child{margin-bottom:0}
+html:not([data-bp="desk"]) #about .card h3{font-size:clamp(28px,8vw,44px);margin:var(--s2) 0 var(--s4)}
+html:not([data-bp="desk"]) #about .card .no{font-size:12px;letter-spacing:.1em}
+html:not([data-bp="desk"]) #about .c1 .ph{height:clamp(176px,48vw,264px);flex:none}
+html:not([data-bp="desk"]) #about .c1 p{margin:var(--s4) 0 0;font-size:var(--t-body);line-height:1.6;max-width:60ch}
+html:not([data-bp="desk"]) #about .c2 .st{gap:var(--s4);padding:var(--s3) 0}
+html:not([data-bp="desk"]) #about .c2 .num{font-size:clamp(56px,17vw,96px);min-width:40%}
+html:not([data-bp="desk"]) #about .c2 .lbl{font-size:12px;letter-spacing:.1em}
+html:not([data-bp="desk"]) #about .c3 .now{margin:var(--s2) 0 var(--s4);font-size:clamp(17px,4.6vw,22px)}
+html:not([data-bp="desk"]) #about .c3 .loc{font-size:clamp(28px,8vw,40px)}
+html:not([data-bp="desk"]) #about .c3 .icos{padding-top:var(--s6);flex-wrap:wrap;gap:var(--s4) 0}
+html[data-bp="phone"] #about .ico{flex:0 0 33.33%}
+html:not([data-bp="desk"]) #about .ico svg{width:36px;height:36px}
+html:not([data-bp="desk"]) #about .ico span{font-size:12px;letter-spacing:.08em}
+html:not([data-bp="desk"]) #about.moving .card{will-change:transform}
+/* ---- Skills: two marquees, then the skill groups as tappable pills ---- */
+.sgroups{display:none}
+html:not([data-bp="desk"]) #skills h2{position:static;font-size:var(--t-title);line-height:1;margin:0 0 var(--s8)}
+html:not([data-bp="desk"]) #skills .row{position:relative;left:auto;top:auto;margin:0 0 var(--s4) calc(-1*var(--gl))}
+html:not([data-bp="desk"]) .tag{padding:var(--s2) var(--s4);margin-right:var(--s2);border-width:1.5px;font-size:20px;line-height:1.2}
+html:not([data-bp="desk"]) #skills .sgroups{display:grid;grid-template-columns:1fr;gap:var(--s8);margin-top:var(--s12)}
+html[data-bp^="tab"] #skills .sgroups{grid-template-columns:1fr 1fr}
+html:not([data-bp="desk"]) #skills .sgroups h4{margin:0 0 var(--s3);font:500 12px/1.6 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+html:not([data-bp="desk"]) #skills .sgroups .pl{display:flex;flex-wrap:wrap;gap:var(--s2)}
+html:not([data-bp="desk"]) #skills .pill2{display:inline-flex;align-items:center;min-height:40px;padding:0 var(--s4);border:1px solid #3a3a3e;border-radius:99px;background:none;color:var(--fg);font:500 15px/1 var(--body);cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease}
+html:not([data-bp="desk"]) #skills .pill2.sel{background:var(--acc);border-color:var(--acc);color:#111}
+/* ---- Experience: a line on the left, job cards (tablet: dates left, card right) ---- */
+html:not([data-bp="desk"]) #exp h2{position:static;font-size:var(--t-title);line-height:1;text-align:left;margin:0 0 var(--s8)}
+html:not([data-bp="desk"]) #exp .track,html:not([data-bp="desk"]) #exp .line,html:not([data-bp="desk"]) #exp .dot{display:none}
+html:not([data-bp="desk"]) #exp .jobs{position:relative;display:flex;flex-direction:column;gap:var(--s6);padding-left:var(--s8)}
+html:not([data-bp="desk"]) #exp .cline{display:block;position:absolute;left:7px;top:var(--s2);bottom:var(--s2);width:2px;background:#2a2a2d}
+html:not([data-bp="desk"]) #exp .cline i{position:absolute;inset:0;background:var(--acc);transform-origin:top;transform:scaleY(0)}
+html:not([data-bp="desk"]) #exp .item{position:relative;left:auto;top:auto!important;width:auto;opacity:1}
+html:not([data-bp="desk"]) #exp .item .jc{background:#161617;border:1px solid #2c2c2e;border-radius:var(--card-r);padding:var(--s6)}
+html:not([data-bp="desk"]) #exp .item .date{margin:0 0 var(--s2);font-size:12px;letter-spacing:.1em}
+html:not([data-bp="desk"]) #exp .item h3{margin:0 0 var(--s2);font-size:clamp(24px,7vw,32px);line-height:1.1}
+html:not([data-bp="desk"]) #exp .item .role{margin:0 0 var(--s3);font-size:var(--t-body)}
+html:not([data-bp="desk"]) #exp .item ul{margin:0;padding-left:var(--s4);font-size:15px;line-height:1.6}
+html:not([data-bp="desk"]) #exp .item li{margin:0 0 var(--s2)}
+html:not([data-bp="desk"]) #exp .cdot{display:block;position:absolute;left:calc(-1*var(--s8) + 1px);top:var(--s6);width:16px;height:16px;border-radius:50%;background:#2a2a2d;z-index:2;transition:background .3s ease}
+html:not([data-bp="desk"]) #exp .cdot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--acc);opacity:0}
+html:not([data-bp="desk"]) #exp .cdot.on{background:var(--acc)}
+html:not([data-bp="desk"]) #exp .cdot.on::after{animation:dotp 1.6s ease-out infinite}
+@keyframes dotp{0%{transform:scale(1);opacity:.6}100%{transform:scale(3);opacity:0}}
+html[data-bp^="tab"] #exp .jobs{padding-left:0}
+html[data-bp^="tab"] #exp .cline{left:143px}
+html[data-bp^="tab"] #exp .item{display:grid;grid-template-columns:120px 1fr;column-gap:var(--s12)}
+html[data-bp^="tab"] #exp .item .date{padding-top:var(--s6)}
+html[data-bp^="tab"] #exp .cdot{left:136px}
+/* ---- Projects: swipe carousel on phone and tablet portrait; the smaller flatter ring on tablet landscape ---- */
+.pdots i{display:block}
+html:not([data-bp="desk"]) #proj h2{position:static;font-size:var(--t-title);line-height:1;margin:0 0 var(--s8)}
+html[data-bp="phone"] #proj .meta.b,html[data-bp="tabp"] #proj .meta.b{display:none}
+html[data-bp="phone"] #proj .stage,html[data-bp="tabp"] #proj .stage{display:none}
+html[data-bp="phone"] #proj .pcar,html[data-bp="tabp"] #proj .pcar{--sw:80vw;--pad:calc((100vw - var(--sw))/2);display:block;margin:0 calc(-1*var(--gr)) 0 calc(-1*var(--gl))}
+html[data-bp="tabp"] #proj .pcar{--sw:72vw}
+html[data-bp="phone"] #proj .ptrack,html[data-bp="tabp"] #proj .ptrack{display:flex;gap:var(--s4);padding:var(--s2) var(--pad) var(--s4);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+html[data-bp="phone"] #proj .slide,html[data-bp="tabp"] #proj .slide{flex:0 0 var(--sw);scroll-snap-align:center;scroll-snap-stop:always;transform-origin:50% 50%}
+html[data-bp="phone"] #proj .slide .win,html[data-bp="tabp"] #proj .slide .win{background:#161617;border:2px solid #3a3a3e;border-radius:10px;overflow:hidden}
+html[data-bp="phone"] #proj .slide .info,html[data-bp="tabp"] #proj .slide .info{padding:var(--s4) 0 0}
+html[data-bp="phone"] #proj .slide .info h3,html[data-bp="tabp"] #proj .slide .info h3{margin:0 0 var(--s2);font:400 clamp(24px,7vw,32px)/1.1 var(--disp);text-transform:uppercase}
+html[data-bp="phone"] #proj .slide .info .d,html[data-bp="tabp"] #proj .slide .info .d{margin:0 0 var(--s3);font-size:15px;line-height:1.6;color:#a9a9a3}
+html[data-bp="phone"] #proj .tags,html[data-bp="tabp"] #proj .tags{max-width:none;gap:var(--s2)}
+html[data-bp="phone"] #proj .tags span,html[data-bp="tabp"] #proj .tags span{display:inline-flex;align-items:center;min-height:36px;padding:0 var(--s3);font-size:13px}
+html[data-bp="phone"] #proj .slide .acts,html[data-bp="tabp"] #proj .slide .acts{display:flex;gap:var(--s3);margin-top:var(--s4)}
+html[data-bp="phone"] #proj .slide .visit,html[data-bp="tabp"] #proj .slide .visit,html[data-bp="phone"] #proj .slide .prev,html[data-bp="tabp"] #proj .slide .prev{position:static;display:inline-flex;flex:1;align-items:center;justify-content:center;min-height:48px;padding:0 var(--s4);font-size:15px;border-radius:4px;text-align:center}
+html[data-bp="phone"] #proj .pdots,html[data-bp="tabp"] #proj .pdots{display:flex;justify-content:center;gap:var(--s1);margin-top:var(--s4)}
+html[data-bp="phone"] #proj .pdots i,html[data-bp="tabp"] #proj .pdots i{box-sizing:content-box;width:8px;height:8px;padding:var(--s2);border-radius:50%;background:#3a3a3e;background-clip:content-box;transition:background .2s ease;cursor:pointer}
+html[data-bp="phone"] #proj .pdots i.on,html[data-bp="tabp"] #proj .pdots i.on{background:var(--acc);background-clip:content-box}
+html[data-bp="tabl"] #proj{display:block;height:calc(100*var(--u));min-height:0;padding:0}
+html[data-bp="tabl"] #proj .meta{display:none}
+html[data-bp="tabl"] #proj h2{position:absolute;top:calc(var(--bar) + var(--s6));left:var(--gl);margin:0}
+html[data-bp="tabl"] #proj .stage{perspective:2600px}
+html[data-bp="tabl"] #proj .ring{top:57%}
+html[data-bp="tabl"] #proj .scr{--cw:400px;--ch:440px}
+html[data-bp="tabl"] #proj .scr .info{padding-bottom:var(--s12)}
+html[data-bp="tabl"] #proj .scr .tags{max-width:100%}
+html[data-bp="tabl"] #proj .visit,html[data-bp="tabl"] #proj .scr .prev{min-height:48px;padding:0 var(--s6);align-items:center;justify-content:center}
+html[data-bp="tabl"] #proj .scr.front .visit{display:inline-flex}
+html[data-bp="tabl"] #proj .scr .prev{right:136px}
+html.touch[data-bp="tabl"] #proj .scr.front .prev{display:inline-flex}
+/* ---- More builds: stacked on phone, 2 + 1 on tablet ---- */
+html:not([data-bp="desk"]) #more .lab{position:static;margin:0 0 var(--s6);font-size:12px;letter-spacing:.1em}
+html:not([data-bp="desk"]) #more .mrow{position:static;margin:0;grid-template-columns:1fr;gap:var(--s6)}
+html[data-bp^="tab"] #more .mrow{grid-template-columns:1fr 1fr}
+html[data-bp^="tab"] #more .mb:nth-child(3){grid-column:1/-1}
+html:not([data-bp="desk"]) #more .mb{min-height:0;padding:var(--s6);border-radius:var(--card-r)}
+html:not([data-bp="desk"]) #more .mb .ico2{margin-bottom:var(--s6)}
+html:not([data-bp="desk"]) #more .mb h3{margin:0 0 var(--s2);font-size:clamp(28px,8vw,40px)}
+html:not([data-bp="desk"]) #more .mb .d{margin:0 0 var(--s4);font-size:var(--t-body);line-height:1.6}
+html:not([data-bp="desk"]) #more .mb .pills span{display:inline-flex;align-items:center;min-height:36px;padding:0 var(--s3);font-size:13px}
+html:not([data-bp="desk"]) #more .mb .soon{margin-top:var(--s4);padding-top:var(--s3);font-size:12px}
+/* ---- Education ---- */
+html:not([data-bp="desk"]) #edu h2{position:static;font-size:var(--t-title);line-height:1;text-align:left;margin:0 0 var(--s8)}
+html:not([data-bp="desk"]) #edu .school{position:relative;left:auto;right:auto;top:auto!important;flex-direction:column;align-items:flex-start;gap:var(--s2);margin:0 0 var(--s6);padding:var(--s6);background:#161617;border:1px solid #2c2c2e;border-radius:var(--card-r)}
+html:not([data-bp="desk"]) #edu .yr{min-width:0;font-size:clamp(56px,16vw,96px);line-height:1}
+html:not([data-bp="desk"]) #edu .school h3{margin:0 0 var(--s2);font-size:clamp(24px,7vw,32px);line-height:1.1}
+html:not([data-bp="desk"]) #edu .school p{max-width:60ch;font-size:var(--t-body);line-height:1.6}
+/* ---- Resume ---- */
+html:not([data-bp="desk"]) #resume h2{position:static;margin:auto 0 var(--s8);font-size:var(--t-display);line-height:1;text-align:left}
+html:not([data-bp="desk"]) #resume .mask{display:block;overflow:hidden;padding:.06em 0}
+html:not([data-bp="desk"]) #resume .m-in{display:block}
+html:not([data-bp="desk"]) #resume .btns{position:static;display:flex;flex-direction:column;gap:var(--s3);text-align:left}
+html[data-bp^="tab"] #resume .btns{flex-direction:row;flex-wrap:wrap}
+html:not([data-bp="desk"]) #resume .btn{margin:0;display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 var(--s6);font-size:16px}
+html:not([data-bp="desk"]) #resume .btn.o{padding:0 var(--s6)}
+html:not([data-bp="desk"]) #resume .txt{position:static;margin:var(--s6) 0 auto;text-align:left;font-size:14px}
+/* ---- Contact ---- */
+html:not([data-bp="desk"]) #contact h2{position:static;left:auto;margin:auto 0 var(--s8);font-size:var(--t-display);line-height:1;text-align:center;white-space:normal;transform-origin:50% 50%}
+html:not([data-bp="desk"]) #contact .mail{position:static;margin-bottom:auto;text-align:center}
+html:not([data-bp="desk"]) #contact .mail .big{margin-bottom:var(--s6);font-size:clamp(20px,5.6vw,32px);word-break:break-word}
+html:not([data-bp="desk"]) #contact .mail .tags{display:flex;flex-direction:column;gap:var(--s3);margin:0}
+html[data-bp^="tab"] #contact .mail .tags{flex-direction:row;justify-content:center}
+html:not([data-bp="desk"]) #contact .mail .tag{display:flex;align-items:center;justify-content:center;min-height:48px;margin:0;padding:0 var(--s4);font-size:clamp(16px,4.2vw,20px);text-transform:none;white-space:normal;word-break:break-all}
+html:not([data-bp="desk"]) #contact .mail .txt{margin-top:var(--s6);font-size:var(--t-body)}
+html:not([data-bp="desk"]) #reach .lab{position:static;margin:0 0 var(--s4);font-size:12px;letter-spacing:.1em}
+html:not([data-bp="desk"]) #reach .left{position:static;width:auto}
+html:not([data-bp="desk"]) #reach h2{margin:0 0 var(--s4);font-size:var(--t-title);line-height:1}
+html:not([data-bp="desk"]) #reach .p{max-width:60ch;margin:0 0 var(--s6);font-size:var(--t-body)}
+html:not([data-bp="desk"]) #reach .acts{flex-direction:column;align-items:stretch;gap:var(--s3)}
+html:not([data-bp="desk"]) #reach .btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px}
+html:not([data-bp="desk"]) #reach .addr{margin-top:var(--s6);font-size:14px}
+html:not([data-bp="desk"]) #reach .form{position:static;width:100%;margin-top:var(--s8);padding:var(--s6);border-radius:var(--card-r)}
+html:not([data-bp="desk"]) #reach .f input,html:not([data-bp="desk"]) #reach .f textarea{min-height:48px;font-size:16px}
+html:not([data-bp="desk"]) #reach .send{align-self:stretch;width:100%;min-height:48px}
+html[data-bp^="tab"] #reach{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s12);align-content:start}
+html[data-bp^="tab"] #reach .meta,html[data-bp^="tab"] #reach .lab{grid-column:1/-1}
+html[data-bp^="tab"] #reach .form{margin-top:0}
+/* ---- short screens (a phone held sideways): Home corners need the room ---- */
 @media (max-height:500px){
-  #skills h2{font-size:min(15vw,calc(20*var(--u)));top:calc(22*var(--u))}
-  #exp h2{font-size:min(17vw,calc(19*var(--u)));top:calc(22*var(--u))}
-  #resume h2{font-size:min(28vw,calc(32*var(--u)));top:calc(22*var(--u))}
-  #resume .btns{flex-direction:row;flex-wrap:wrap;top:calc(60*var(--u))}
-  #resume .btn{width:auto;flex:1 1 auto}
-  #resume .txt{top:calc(88*var(--u))}
-  #about .sent{font-size:min(12vw,calc(17*var(--u)))}
-  #about .c1{display:grid;grid-template-columns:34% 1fr;grid-template-rows:auto auto 1fr;column-gap:16px;align-content:start}
-  #about .c1 .no{grid-column:2;grid-row:1}
-  #about .c1 h3{grid-column:2;grid-row:2;margin:4px 0 6px}
-  #about .c1 .ph{grid-column:1;grid-row:1/4;height:100%}
-  #about .c1 p{grid-column:2;grid-row:3;margin:0;font-size:11.5px;line-height:1.4}
-  #contact .mail{top:calc(60*var(--u))}
-  #contact .mail .big{font-size:calc(7*var(--u));word-break:normal}
-  #contact .mail .tag{display:inline-block;margin:0 6px 6px;font-size:calc(5*var(--u));padding:4px 10px}
-  #home .htag{max-width:70vw}
+html[data-bp="phone"] #home .c-bl{display:none}
+html[data-bp="phone"] #home .me{height:calc(60*var(--u));bottom:var(--s8)}
+html[data-bp="phone"] #home .c-br{bottom:var(--s4)}
+}
+
+/* ===================== PHONES UP TO 640px WIDE: 3D scroll motion (Experience to Contact) =====================
+   CSS transforms only (perspective, rotateX/rotateY, translateZ, scale, opacity). Shadows are static. Desktop and tablet are untouched. */
+@media (max-width:640px){
+html[data-bp="phone"] #exp .jobs{gap:var(--s16);padding-top:var(--s12)}
+html[data-bp="phone"] #exp .item .jc{position:relative;z-index:1;backface-visibility:hidden;box-shadow:0 24px 40px rgba(0,0,0,.45)}
+html[data-bp="phone"] #exp .item .date{display:none}
+html[data-bp="phone"] #exp .jdate{display:block;margin:0 0 var(--s2);font:500 12px/1.6 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+html[data-bp="phone"] #exp .yrbg{display:block;position:absolute;z-index:0;left:var(--s2);top:calc(-1*var(--s12));font:400 clamp(56px,17vw,88px)/1 var(--disp);white-space:nowrap;color:#4a1612;text-shadow:1px 1px 0 #3f1310,2px 2px 0 #38110e,3px 3px 0 #31100c,4px 4px 0 #2a0e0a,5px 5px 0 #240c09,6px 6px 0 #1e0a07;pointer-events:none}
+html[data-bp="phone"] #proj .shine{display:block;position:absolute;top:0;bottom:0;left:0;width:40%;z-index:3;pointer-events:none;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.22),rgba(255,255,255,0));transform:translateX(-130%) skewX(-18deg)}
+html[data-bp="phone"] #proj .slide{backface-visibility:hidden}
+html[data-bp="phone"] #more .mb{padding:0;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+html[data-bp="phone"] #more .mbi{display:grid;position:relative;transform-style:preserve-3d}
+html[data-bp="phone"] #more .mbf,html[data-bp="phone"] #more .mbk{display:flex;flex-direction:column;grid-area:1/1;padding:var(--s6);background:#161617;border:1px solid #2c2c2e;border-radius:var(--card-r);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+html[data-bp="phone"] #more .mbf{justify-content:space-between}
+html[data-bp="phone"] #more .mbk{justify-content:center;transform:rotateY(180deg)}
+html[data-bp="phone"] #more .mbf h3{margin:0}
+html[data-bp="phone"] #edu h2{margin-bottom:var(--s24)}
+html[data-bp="phone"] #edu .edi{display:block;position:relative;margin-bottom:var(--s12);padding-top:clamp(88px,28vw,140px)}
+html[data-bp="phone"] #edu .school{position:relative;z-index:1;margin:0;transform-origin:50% 0;backface-visibility:hidden}
+html[data-bp="phone"] #edu .yr{display:none}
+html[data-bp="phone"] #edu .ghost{display:block;position:absolute;z-index:0;left:0;top:0;font:400 clamp(88px,28vw,140px)/1 var(--disp);color:transparent;-webkit-text-stroke:1.5px #e8dfc8;pointer-events:none}
+html[data-bp="phone"] #resume .sheet{display:block;position:relative;margin:0 0 var(--s8);overflow:hidden;border-radius:4px;background:#fff;box-shadow:0 24px 48px rgba(0,0,0,.6);transform-origin:50% 100%;backface-visibility:hidden}
+html[data-bp="phone"] #resume .sheet img{display:block;width:100%;height:auto}
+html[data-bp="phone"] #contact h2:not(.sayp){display:none}
+html[data-bp="phone"] #contact .sayp{display:block;margin:auto 0 var(--s8);font-size:clamp(56px,20vw,96px);line-height:1;text-align:center;color:var(--fg)}
+html[data-bp="phone"] #contact .sayp .wd{display:inline-block;white-space:nowrap;margin:0 .12em}
+html[data-bp="phone"] #contact .sayp .lt3{display:inline-block;transform-origin:50% 100%;backface-visibility:hidden}
+html[data-bp="phone"] #contact .mail .big{padding:var(--s6);background:#161617;border:1px solid #2c2c2e;border-radius:var(--card-r);box-shadow:0 24px 40px rgba(0,0,0,.45);font-size:clamp(18px,5vw,26px);animation:float3 6s ease-in-out infinite}
+html[data-bp="phone"] #reach .f{transform-origin:50% 0;backface-visibility:hidden}
+}
+@keyframes float3{0%,100%{translate:0 0}50%{translate:0 -8px}}
+
+@media (max-width:640px){
+html[data-bp="phone"] #edu .school{background:linear-gradient(160deg,#1c1c1f 0%,#141415 60%,#1d1210 100%);box-shadow:0 28px 48px rgba(0,0,0,.55);overflow:hidden}
+html[data-bp="phone"] #edu .eedge{display:block;position:absolute;left:0;right:0;top:0;height:2px;background:var(--acc);transform-origin:left;transform:scaleX(0)}
+html[data-bp="phone"] #edu .etop{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);margin:0 0 var(--s4)}
+html[data-bp="phone"] #edu .lvl{display:inline-flex;align-items:center;min-height:36px;padding:0 var(--s4);border:1px solid #6a6a64;border-radius:99px;font:500 12px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--cream,#e8dfc8)}
+html[data-bp="phone"] #edu .gpa{display:inline-flex;align-items:baseline;gap:var(--s2);font:500 12px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+html[data-bp="phone"] #edu .gpa b{font:400 40px/1 var(--disp);letter-spacing:0;color:var(--acc)}
+html[data-bp="phone"] #edu .ghost.lit{color:var(--acc);-webkit-text-stroke:0;opacity:0}
+html[data-bp="phone"] #edu .espine{display:block;position:absolute;left:var(--s6);top:calc(100% + var(--s2));height:calc(var(--s12) - var(--s4));width:2px;background:linear-gradient(var(--acc),rgba(255,75,58,0));transform-origin:top;transform:scaleY(0)}
+html[data-bp="phone"] #edu .edi:last-of-type .espine{display:none}
 }
