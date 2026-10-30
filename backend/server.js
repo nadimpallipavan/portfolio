@@ -64,4 +64,11 @@ app.use(
 
 app.use((req, res) => res.status(404).sendFile(path.join(FRONTEND, "index.html"), { headers: { "Cache-Control": "no-cache" } }));
 
-app.listen(PORT, () => console.log(`Portfolio running on http://localhost:${PORT}`));
+app.listen(PORT, (err) => {
+  // Express 5 passes a start-up error (for example "port already in use") to this callback; say so and stop instead of claiming success.
+  if (err) {
+    console.error(err.code === "EADDRINUSE" ? `Port ${PORT} is already in use. Start with a free port, for example: PORT=3001 npm start` : err.message);
+    process.exit(1);
+  }
+  console.log(`Portfolio running on http://localhost:${PORT}`);
+});
