@@ -69,7 +69,7 @@ window.addEventListener("load", () => {
   /* ABOUT: split the sentence into words */
   const aboutEl = $("#about"), sent = $(".sent", aboutEl);
   const txt = sent.textContent.trim().split(/\s+/);
-  sent.innerHTML = txt.map((w, i) => `<span class="w${i >= txt.length - 3 ? " hot" : ""}">${w}</span>`).join(" ");
+  sent.innerHTML = txt.map((w, i) => `<span class="w${i >= txt.length - 5 ? " hot" : ""}">${w}</span>`).join(" ");
 
   /* EXPERIENCE: a red copy of each title and a red dot fade in on top (opacity only); remember the desktop positions */
   const expEl = $("#exp"), items = $$(".item", expEl), dots = $$(".dot", expEl);
@@ -198,6 +198,7 @@ window.addEventListener("load", () => {
   const car = document.createElement("div"); car.className = "pcar";
   car.innerHTML = `<div class="ptrack" tabindex="0" aria-label="Featured projects, swipe sideways">${LIVE.map((p) => `<article class="slide">${frame(p, SZ_CAR)}<div class="info">${infoBits(p)}<div class="acts"><a class="visit" href="https://${p.dom}" target="_blank" rel="noopener noreferrer">Visit site ↗</a><button class="prev" type="button">Preview</button></div></div></article>`).join("")}</div><div class="pdots">${LIVE.map((p, i) => `<i role="button" aria-label="${p.name}" tabindex="0"></i>`).join("")}</div>`;
   proj.insertBefore(car, $(".meta.b", proj));
+  car.after($(".also", proj));                                                   // the "Also built" line sits under the carousel and its dots (it is absolutely placed under the ring on desktop)
   const cards = $$(".scr", ring), faces = $$(".face", ring), dimvs = $$(".dimv", ring);
   const slides = $$(".slide", car), track = $(".ptrack", car), pdots = $$(".pdots i", car);
 
@@ -404,10 +405,11 @@ window.addEventListener("load", () => {
       const at = pin(about, 300);
       const E = { ease: "none" };
       at.to(ringS, { rotation: 260, duration: 1, ...E }, 0);
-      sw.forEach((w, i) => at.to(w, { scale: 1, opacity: 1, y: 0, duration: 0.07, ease: "power3.out" }, i * 0.032));
+      const STEP = 0.028, LAND = (sw.length - 1) * STEP + 0.07;                       // when the last word has landed
+      sw.forEach((w, i) => at.to(w, { scale: 1, opacity: 1, y: 0, duration: 0.07, ease: "power3.out" }, i * STEP));
       hot.forEach((w) => {
-        const t = sw.indexOf(w) * 0.032 + 0.04;
-        at.to(w, { color: RED, duration: 0.04, ...E }, t).to(w, { scale: 1.06, duration: 0.016, ease: "power1.out" }, 0.3).to(w, { scale: 1, duration: 0.016, ease: "power1.in" }, 0.316);
+        const t = sw.indexOf(w) * STEP + 0.04;
+        at.to(w, { color: RED, duration: 0.04, ...E }, t).to(w, { scale: 1.06, duration: 0.014, ease: "power1.out" }, LAND + 0.003).to(w, { scale: 1, duration: 0.014, ease: "power1.in" }, LAND + 0.017);
       });
       at.to(sent, { scale: 1.04, duration: 0.15, ...E }, 0.2);
       at.to(sent, { scale: 0.35, y: () => -vh() * 39, duration: 0.15, ease: "power2.inOut" }, 0.35);
@@ -789,10 +791,11 @@ window.addEventListener("load", () => {
       gsap.set(icos, { opacity: 0, y: 16 });
       gsap.set($$(".edge", about), { scaleX: 0 });
       const st = gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: sc(astage, "top 80%", "bottom 55%") });
-      sw.forEach((w, i) => st.to(w, { scale: 1, opacity: 1, y: 0, duration: 0.1, ease: "power3.out" }, i * 0.08));
+      const STEP = 0.065, LAND = (sw.length - 1) * STEP + 0.1;
+      sw.forEach((w, i) => st.to(w, { scale: 1, opacity: 1, y: 0, duration: 0.1, ease: "power3.out" }, i * STEP));
       hot.forEach((w) => {
-        const t = sw.indexOf(w) * 0.08 + 0.05;
-        st.to(w, { color: RED, duration: 0.06 }, t).to(w, { scale: 1.06, duration: 0.03, ease: "power1.out" }, 0.74).to(w, { scale: 1, duration: 0.03, ease: "power1.in" }, 0.77);
+        const t = sw.indexOf(w) * STEP + 0.05;
+        st.to(w, { color: RED, duration: 0.06 }, t).to(w, { scale: 1.06, duration: 0.03, ease: "power1.out" }, LAND + 0.005).to(w, { scale: 1, duration: 0.03, ease: "power1.in" }, LAND + 0.035);
       });
       gsap.to(ringS, { rotation: 200, ease: "none", scrollTrigger: sc(astage, "top bottom", "bottom top") });
       /* all three cards get the same height (the tallest one), so the stack lines up */

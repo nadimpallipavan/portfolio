@@ -148,8 +148,6 @@ a.tag{text-decoration:none;color:inherit}a.tag:hover{border-color:var(--acc)}
 #more .mb .d{margin:0 0 14px;font-size:14.5px;line-height:1.45;color:#a9a9a3}
 #more .mb .pills{display:flex;flex-wrap:wrap;gap:6px}
 #more .mb .pills span{font-size:11.5px;line-height:1.2;border:1px solid #6a6a64;color:#e8dfc8;border-radius:99px;padding:5px 11px}
-#more .mb .soon{margin-top:18px;padding-top:14px;border-top:1px solid #2c2c2e;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8a8a85}
-#more .mb .soon::before{content:"";display:inline-block;width:6px;height:6px;margin-right:8px;border-radius:50%;background:var(--acc);vertical-align:1px}
 /* icon 1: a dot travels along a curved map route */
 #more .route{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 #more .route path{fill:none;stroke:#4a4a4e;stroke-width:2;stroke-dasharray:3 5;stroke-linecap:round}
@@ -365,8 +363,7 @@ html:not([data-bp="desk"]) #more .mb .ico2{margin-bottom:var(--s6)}
 html:not([data-bp="desk"]) #more .mb h3{margin:0 0 var(--s2);font-size:clamp(28px,8vw,40px)}
 html:not([data-bp="desk"]) #more .mb .d{margin:0 0 var(--s4);font-size:var(--t-body);line-height:1.6}
 html:not([data-bp="desk"]) #more .mb .pills span{display:inline-flex;align-items:center;min-height:36px;padding:0 var(--s3);font-size:13px}
-html:not([data-bp="desk"]) #more .mb .soon{margin-top:var(--s4);padding-top:var(--s3);font-size:12px}
-/* ---- Education ---- */
+html:not([data-bp="desk"]) /* ---- Education ---- */
 html:not([data-bp="desk"]) #edu h2{position:static;font-size:var(--t-title);line-height:1;text-align:left;margin:0 0 var(--s8)}
 html:not([data-bp="desk"]) #edu .school{position:relative;left:auto;right:auto;top:auto!important;flex-direction:column;align-items:flex-start;gap:var(--s2);margin:0 0 var(--s6);padding:var(--s6);background:#161617;border:1px solid #2c2c2e;border-radius:var(--card-r)}
 html:not([data-bp="desk"]) #edu .yr{min-width:0;font-size:clamp(56px,16vw,96px);line-height:1}
@@ -480,3 +477,8 @@ html[data-bp="phone"] #edu .edi:last-of-type .espine{display:none}
 @keyframes gA{0%,100%{transform:translateX(0)}50%{transform:translateX(26px)}}
 @keyframes gB{0%,100%{transform:translateX(0)}50%{transform:translateX(18px)}}
 @keyframes gC{0%,100%{transform:translateX(0)}50%{transform:translateX(-22px)}}
+
+/* the line under the project ring */
+.also{margin:0;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#proj .also{position:absolute;left:0;right:0;bottom:calc(9*var(--u));z-index:6;text-align:center}
+html[data-bp="phone"] #proj .also,html[data-bp="tabp"] #proj .also{position:static;margin:var(--s6) 0 0;text-align:center;font-size:12px;letter-spacing:.1em}
