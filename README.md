@@ -1,4 +1,4 @@
-# Pavan Nadimpalli · Full-Stack Developer portfolio
+# Pavan Nadimpalli · Software Engineer portfolio
 
 My personal developer portfolio: a scroll-driven site (Home, About Me, Technical Skills, Experience, Featured Projects, Education, Resume, Contact) with a small Node.js backend that receives the contact form and emails it to me.
 

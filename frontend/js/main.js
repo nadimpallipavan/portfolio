@@ -48,8 +48,8 @@ window.addEventListener("load", () => {
   /* SKILLS: the two rows of pills */
   const tags = (arr, rot) => arr.map((s, i) => `<span class="tag ${(i + rot) % 3 === 0 ? "f" : (i + rot) % 3 === 1 ? "" : "r"}">${s}</span>`).join("");
   const g = Object.fromEntries(DATA.skillGroups);
-  const topSk = [...g["Frontend"], ...g["Backend & APIs"]];
-  const restSk = [...new Set([...g["Databases"], ...g["Cloud & DevOps"], ...g["Data & AI"], ...g["Languages"], ...g["Tools"]])];
+  const topSk = [...g["Programming & Data"], ...g["Frontend & Backend"]];
+  const restSk = [...new Set([...g["AI / Machine Learning"], ...g["Databases & Cloud"], ...g["Engineering Practices"]])];
   const r1 = $(".r1"), r2 = $(".r2");
   r1.innerHTML = tags(topSk, 0).repeat(3);
   r2.innerHTML = tags([...restSk].reverse(), 1).repeat(3);
@@ -118,7 +118,7 @@ window.addEventListener("load", () => {
     /* MORE BUILDS: each card gets a front (icon + name) and a back (description + tech pills) */
     $$("#more .mb").forEach((mb) => {
       const f = div("mbf"), k = div("mbk"), inner = div("mbi");
-      [$(".ico2", mb), $("h3", mb)].forEach((e) => f.appendChild(e));
+      [$(".ico2", mb), $("h3", mb), $(".kind", mb)].filter(Boolean).forEach((e) => f.appendChild(e));
       [...mb.children].filter((e) => !f.contains(e)).forEach((e) => k.appendChild(e));
       inner.append(f, k); mb.appendChild(inner); mb.tabIndex = 0; mb.setAttribute("role", "button");
     });
@@ -129,7 +129,7 @@ window.addEventListener("load", () => {
       const g2 = g.cloneNode(true); g2.className = "ghost lit";                                // a red-filled copy that fades in when the card is flat
       const ed = DATA.education[$$("#edu .school").indexOf(s)], gpa = ed.detail.match(/C?GPA (\d+(?:\.\d+)?)/);
       const top = div("etop"), edge = div("eedge");
-      top.innerHTML = `<span class="lvl">${/^MS/.test(ed.title) ? "Master's" : "Bachelor's"}</span>` + (gpa ? `<span class="gpa"><b>${gpa[1]}</b>${/CGPA/.test(ed.detail) ? "CGPA" : "GPA"}</span>` : "");
+      top.innerHTML = `<span class="lvl">${/^M\.?S/.test(ed.title) ? "Master's" : "Bachelor's"}</span>` + (gpa ? `<span class="gpa"><b>${gpa[1]}</b>${/CGPA/.test(ed.detail) ? "CGPA" : "GPA"}</span>` : "");
       s.insertBefore(edge, s.firstChild); s.insertBefore(top, s.children[1]);
       if ($$("#edu .school").indexOf(s) < DATA.education.length - 1) w.appendChild(div("espine"));                                             // the spine that links the cards into a timeline
       s.parentNode.insertBefore(w, s); w.append(g, g2, s);
@@ -235,7 +235,7 @@ window.addEventListener("load", () => {
 
   /* CONTACT: copy email and the form (the same on every screen size) */
   {
-    const reach = $("#reach"), MAIL = "Nadimpallipavanms@gmail.com";
+    const reach = $("#reach"), MAIL = "nadimpallipavanms@gmail.com";
     const copied = $("#copied", reach); let ct = 0;
     $("#copyMail", reach).addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(MAIL); }
@@ -505,7 +505,14 @@ window.addEventListener("load", () => {
       /* desktop keeps the original positions; tablet and phone stack the rows one under the other from measured heights */
       const layout = () => {
         if (D) {
-          items.forEach((it, i) => { it.style.top = it.dataset.t; dots[i].style.top = dots[i].dataset.t; });
+          /* desktop: the rows are placed one under the other from their measured heights; if the text is too tall for a short screen, it shrinks a little */
+          const H = innerHeight, gap = H * 0.022, start = H * 0.15, end = H * 0.9;
+          let xs = 1;
+          for (let tries = 0; tries < 5; tries++) {
+            exp.style.setProperty("--xs", xs);
+            let y = start; items.forEach((it, i) => { it.style.top = y + "px"; dots[i].style.top = (y - 6) + "px"; y += it.offsetHeight + gap; });
+            if (y - gap <= end || xs <= 0.7) break; xs = Math.max(0.7, xs - 0.07);
+          }
           line.style.top = line.style.height = track.style.top = track.style.height = "";
           return;
         }

@@ -96,12 +96,14 @@ a.tag{text-decoration:none;color:inherit}a.tag:hover{border-color:var(--acc)}
 #exp h2{right:4vw;top:calc(12*var(--u));font-size:calc(15*var(--u));text-align:right}
 #exp .line{position:absolute;left:7vw;top:calc(12*var(--u));height:calc(78*var(--u));width:3px;background:var(--acc);transform-origin:top;z-index:2}
 #exp .track{position:absolute;left:7vw;top:calc(12*var(--u));height:calc(78*var(--u));width:3px;background:var(--line)}
-#exp .item{position:absolute;left:10vw;width:36vw;opacity:.28}
+#exp .item{position:absolute;left:10vw;width:44vw;opacity:.28}
 #exp .item .date{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 #exp .item h3{font-size:calc(3.7*var(--u));margin:2px 0 2px}
-#exp .item .role{margin:0 0 6px;color:var(--fg);font-size:14px;font-weight:600}
-#exp .item ul{margin:0;padding-left:16px;color:var(--muted);font-size:12.5px;line-height:1.4}
+#exp .item .role{margin:0 0 4px;color:var(--fg);font-size:calc(14px*var(--xs,1));font-weight:600}
+#exp .item .stack{margin:0 0 6px;color:#8a8a85;font-size:calc(11.5px*var(--xs,1));line-height:1.4}
+#exp .item ul{margin:0;padding-left:16px;color:var(--muted);font-size:calc(12.5px*var(--xs,1));line-height:1.4}
 #exp .item li{margin:0 0 2px}
+@media (min-width:1025px) and (max-width:1180px){#exp .item{width:36vw}}
 #exp .dot{position:absolute;left:calc(7vw - 6px);width:15px;height:15px;border-radius:50%;background:var(--line);z-index:3}
 #exp .dot b{position:absolute;inset:0;border-radius:50%;background:#ff4b3a;opacity:0}
 #exp .h3w{position:relative;display:flow-root}
@@ -135,13 +137,15 @@ a.tag{text-decoration:none;color:inherit}a.tag:hover{border-color:var(--acc)}
 #proj .scr.front .visit{display:inline-block}
 /* 5b More builds: three wide cards after the ring; flip up one by one while scrolling (transform and opacity only) */
 #more.moving .mb{will-change:transform}
+#more{height:auto;min-height:calc(100*var(--u));padding:calc(20*var(--u)) 4vw 96px}
 #more .lab{position:absolute;left:4vw;top:calc(12*var(--u));font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
-#more .mrow{position:absolute;left:4vw;right:4vw;top:50%;margin-top:calc(-26*var(--u));display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;perspective:1400px}
-#more .mb{--k:1;position:relative;display:flex;flex-direction:column;min-height:calc(52*var(--u));padding:28px 30px;background:#161617;border:1px solid #2c2c2e;border-radius:22px;transform-origin:50% 100%;translate:0 0;transition:translate .25s ease,border-color .25s ease,box-shadow .25s ease;cursor:default}
+#more .mrow{position:static;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;perspective:1400px}
+#more .mb{--k:1;position:relative;display:flex;flex-direction:column;min-height:0;padding:24px 26px;background:#161617;border:1px solid #2c2c2e;border-radius:22px;transform-origin:50% 100%;translate:0 0;transition:translate .25s ease,border-color .25s ease,box-shadow .25s ease;cursor:default}
 #more .mb:hover{--k:2.4;translate:0 -6px;border-color:#4a4a4e;box-shadow:0 22px 44px rgba(0,0,0,.45)}
-#more .mb .ico2{position:relative;width:120px;height:80px;margin-bottom:auto}
-#more .mb h3{font:400 min(calc(5.4*var(--u)),46px)/1 var(--disp);text-transform:uppercase;margin:26px 0 10px;color:var(--fg)}
-#more .mb .d{margin:0 0 16px;font-size:15px;line-height:1.45;color:#a9a9a3}
+#more .mb .ico2{position:relative;width:120px;height:80px;margin-bottom:auto;flex:none}
+#more .mb h3{font:400 min(calc(4.6*var(--u)),40px)/1 var(--disp);text-transform:uppercase;margin:22px 0 10px;color:var(--fg)}
+#more .mb .kind{display:inline-block;align-self:flex-start;margin:0 0 12px;padding:6px 10px;border:1px solid rgba(255,75,58,.5);border-radius:99px;font:500 11px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
+#more .mb .d{margin:0 0 14px;font-size:14.5px;line-height:1.45;color:#a9a9a3}
 #more .mb .pills{display:flex;flex-wrap:wrap;gap:6px}
 #more .mb .pills span{font-size:11.5px;line-height:1.2;border:1px solid #6a6a64;color:#e8dfc8;border-radius:99px;padding:5px 11px}
 #more .mb .soon{margin-top:18px;padding-top:14px;border-top:1px solid #2c2c2e;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8a8a85}
@@ -356,7 +360,6 @@ html.touch[data-bp="tabl"] #proj .scr.front .prev{display:inline-flex}
 html:not([data-bp="desk"]) #more .lab{position:static;margin:0 0 var(--s6);font-size:12px;letter-spacing:.1em}
 html:not([data-bp="desk"]) #more .mrow{position:static;margin:0;grid-template-columns:1fr;gap:var(--s6)}
 html[data-bp^="tab"] #more .mrow{grid-template-columns:1fr 1fr}
-html[data-bp^="tab"] #more .mb:nth-child(3){grid-column:1/-1}
 html:not([data-bp="desk"]) #more .mb{min-height:0;padding:var(--s6);border-radius:var(--card-r)}
 html:not([data-bp="desk"]) #more .mb .ico2{margin-bottom:var(--s6)}
 html:not([data-bp="desk"]) #more .mb h3{margin:0 0 var(--s2);font-size:clamp(28px,8vw,40px)}
@@ -420,6 +423,7 @@ html[data-bp="phone"] #more .mb{padding:0;background:none;border:0;cursor:pointe
 html[data-bp="phone"] #more .mbi{display:grid;position:relative;transform-style:preserve-3d}
 html[data-bp="phone"] #more .mbf,html[data-bp="phone"] #more .mbk{display:flex;flex-direction:column;grid-area:1/1;padding:var(--s6);background:#161617;border:1px solid #2c2c2e;border-radius:var(--card-r);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 html[data-bp="phone"] #more .mbf{justify-content:space-between}
+html[data-bp="phone"] #more .mbf .kind{margin:var(--s3) 0 0}
 html[data-bp="phone"] #more .mbk{justify-content:center;transform:rotateY(180deg)}
 html[data-bp="phone"] #more .mbf h3{margin:0}
 html[data-bp="phone"] #edu h2{margin-bottom:var(--s24)}
@@ -451,3 +455,28 @@ html[data-bp="phone"] #edu .edi:last-of-type .espine{display:none}
 }
 /* contact form: the hidden spam trap field (humans never see or fill it) */
 .hp{position:absolute!important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+/* More builds: icons for AI Roleplay Trainer (two voices and a score filling), AthenaText (a hub sending to tenants) and the Schedule Reflow Engine (bars reflowing) */
+#more .rp{position:absolute;inset:0}
+#more .rb1,#more .rb2{position:absolute;height:26px;border-radius:13px}
+#more .rb1{left:4px;top:6px;width:62px;background:#26262a;border:1px solid #3a3a3e;animation:rpa calc(3.2s / var(--k)) ease-in-out infinite}
+#more .rb2{right:4px;top:34px;width:70px;background:var(--acc);animation:rpb calc(3.2s / var(--k)) ease-in-out infinite}
+@keyframes rpa{0%,100%{transform:translateX(0);opacity:1}50%{transform:translateX(6px);opacity:.55}}
+@keyframes rpb{0%,100%{transform:translateX(0);opacity:.55}50%{transform:translateX(-6px);opacity:1}}
+#more .rbar{position:absolute;left:4px;right:4px;bottom:2px;height:6px;border-radius:3px;background:#2a2a2e;overflow:hidden}
+#more .rbar b{position:absolute;inset:0;background:var(--acc);transform-origin:left;animation:rfill calc(3.2s / var(--k)) ease-in-out infinite}
+@keyframes rfill{0%{transform:scaleX(.1)}70%,100%{transform:scaleX(.88)}}
+#more .hub{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#more .hub .sp{fill:none;stroke:#4a4a4e;stroke-width:2;stroke-dasharray:3 5;stroke-linecap:round;animation:spd calc(1.6s / var(--k)) linear infinite}
+@keyframes spd{to{stroke-dashoffset:-16}}
+#more .hub .nd{fill:#26262a;stroke:#6a6a64;stroke-width:1.5}
+#more .hub .core{fill:var(--acc)}
+#more .hring{position:absolute;left:49px;top:29px;width:22px;height:22px;border-radius:50%;border:2px solid var(--acc);animation:ringp calc(1.8s / var(--k)) ease-out infinite}
+#more .gantt{position:absolute;inset:0}
+#more .gantt i{position:absolute;height:14px;border-radius:7px}
+#more .g1{left:4px;top:8px;width:46px;background:#3a3a3e;animation:gA calc(3.6s / var(--k)) ease-in-out infinite}
+#more .g2{left:30px;top:33px;width:58px;background:var(--acc);animation:gB calc(3.6s / var(--k)) ease-in-out infinite}
+#more .g3{left:62px;top:58px;width:40px;background:#3a3a3e;animation:gC calc(3.6s / var(--k)) ease-in-out infinite}
+@keyframes gA{0%,100%{transform:translateX(0)}50%{transform:translateX(26px)}}
+@keyframes gB{0%,100%{transform:translateX(0)}50%{transform:translateX(18px)}}
+@keyframes gC{0%,100%{transform:translateX(0)}50%{transform:translateX(-22px)}}
