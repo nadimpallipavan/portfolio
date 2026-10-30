@@ -186,17 +186,19 @@ window.addEventListener("load", () => {
     { name: "SaltwaterCam", key: "saltwatercam", fh: 2269, dom: "saltwatercam.com", desc: "React + Node.js site for a business client.", tags: ["React", "Node.js"] },
     { name: "HiLoPros", key: "hilopros", fh: 5000, dom: "hilopros-com.vercel.app", desc: "React + Node.js site, deployed on Vercel.", tags: ["React", "Node.js", "Vercel"] },
     { name: "Danteswari Daily Needs", key: "danteswari", fh: 4973, dom: "danteswaridailyneeds.com", desc: "MERN e-commerce for daily-needs retail.", tags: ["MERN", "E-commerce"], progress: true },
+    { name: "Royal Standard Pub", key: "royalstandardpub", fh: 3716, dom: "royalstandardpub.co.uk", url: "https://www.royalstandardpub.co.uk/?category=biryanis", desc: "Website for a pub.", tags: [] },
   ];
   const PN = LIVE.length, STEP = 360 / PN;
+  const linkOf = (p) => p.url || "https://" + p.dom;
   const ring = $(".ring", proj);
   const img = (p, kind, cls, sizes) => `<img class="${cls}" width="1440" height="${kind === "hero" ? 900 : p.fh}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="${ASSETS}projects/${p.key}-${kind}.jpg" data-srcset="${ASSETS}projects/${p.key}-${kind}-720.jpg 720w, ${ASSETS}projects/${p.key}-${kind}.jpg 1440w" data-sizes="${sizes}">`;
   const SZ_RING = "(max-width:640px) 80vw, (max-width:1024px) 400px, 1440px", SZ_CAR = "80vw";
   const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${img(p, "full", "f", sizes)}<i class="shine"></i></div></div>`;
   const infoBits = (p) => `<h3>${p.name}</h3><p class="d">${p.desc}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
   ring.innerHTML = LIVE.map((p, i) => `<article class="scr" tabindex="0" role="link" aria-label="${p.name}: ${i === 0 ? "open " + p.dom : "bring to front"}"><div class="face">${frame(p, SZ_RING)}
-    <div class="info">${infoBits(p)}<button class="prev" type="button">Preview</button><a class="visit" href="https://${p.dom}" target="_blank" rel="noopener noreferrer">Visit site ↗</a></div><div class="dimv"></div></div></article>`).join("");
+    <div class="info">${infoBits(p)}<button class="prev" type="button">Preview</button><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a></div><div class="dimv"></div></div></article>`).join("");
   const car = document.createElement("div"); car.className = "pcar";
-  car.innerHTML = `<div class="ptrack" tabindex="0" aria-label="Featured projects, swipe sideways">${LIVE.map((p) => `<article class="slide">${frame(p, SZ_CAR)}<div class="info">${infoBits(p)}<div class="acts"><a class="visit" href="https://${p.dom}" target="_blank" rel="noopener noreferrer">Visit site ↗</a><button class="prev" type="button">Preview</button></div></div></article>`).join("")}</div><div class="pdots">${LIVE.map((p, i) => `<i role="button" aria-label="${p.name}" tabindex="0"></i>`).join("")}</div>`;
+  car.innerHTML = `<div class="ptrack" tabindex="0" aria-label="Featured projects, swipe sideways">${LIVE.map((p) => `<article class="slide">${frame(p, SZ_CAR)}<div class="info">${infoBits(p)}<div class="acts"><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a><button class="prev" type="button">Preview</button></div></div></article>`).join("")}</div><div class="pdots">${LIVE.map((p, i) => `<i role="button" aria-label="${p.name}" tabindex="0"></i>`).join("")}</div>`;
   proj.insertBefore(car, $(".meta.b", proj));
   car.after($(".also", proj));                                                   // the "Also built" line sits under the carousel and its dots (it is absolutely placed under the ring on desktop)
   const cards = $$(".scr", ring), faces = $$(".face", ring), dimvs = $$(".dimv", ring);
@@ -580,7 +582,7 @@ window.addEventListener("load", () => {
         light(); setFront(0);
         cards.forEach((c, i) => {
           const toFront = () => { const st = pt.scrollTrigger; lenis.scrollTo(st.start + (st.end - st.start) * (i / (PN - 1)), { duration: 1.3 }); };
-          const open = () => window.open("https://" + LIVE[i].dom, "_blank", "noopener,noreferrer");
+          const open = () => window.open(linkOf(LIVE[i]), "_blank", "noopener,noreferrer");
           if (fine) {
             on(c, "mouseenter", () => { if (i === front) { hover = i; preview(c).start(); } });
             on(c, "mouseleave", () => { if (hover === i) { preview(c).stop(); hover = -1; } });
@@ -902,7 +904,7 @@ window.addEventListener("load", () => {
         light(); setFront(0);
         cards.forEach((c, i) => {
           const toFront = () => { const st = pt.scrollTrigger; lenis.scrollTo(st.start + (st.end - st.start) * (i / (PN - 1)), { duration: 1.3 }); };
-          const open = () => window.open("https://" + LIVE[i].dom, "_blank", "noopener,noreferrer");
+          const open = () => window.open(linkOf(LIVE[i]), "_blank", "noopener,noreferrer");
           if (fine) {
             on(c, "mouseenter", () => { if (i === front) { hover = i; preview(c).start(); } });
             on(c, "mouseleave", () => { if (hover === i) { preview(c).stop(); hover = -1; } });
