@@ -7,7 +7,7 @@ const ASSETS = document.currentScript ? new URL("../assets/", document.currentSc
 
 /* One shared version number for the resume and every project screenshot. Their addresses end in ?v=ASSET_VERSION, so a replaced file gets a
    new address and shows up at once, even though images are cached for a year. When you replace any image or the resume, change this number. */
-const ASSET_VERSION = "20261030";
+const ASSET_VERSION = "20261030-2";
 const versioned = (url) => url + "?v=" + ASSET_VERSION;
 
 /* =========================================================================
