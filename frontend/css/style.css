@@ -478,7 +478,5 @@ html[data-bp="phone"] #edu .edi:last-of-type .espine{display:none}
 @keyframes gB{0%,100%{transform:translateX(0)}50%{transform:translateX(18px)}}
 @keyframes gC{0%,100%{transform:translateX(0)}50%{transform:translateX(-22px)}}
 
-/* the line under the project ring */
-.also{margin:0;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-#proj .also{position:absolute;left:0;right:0;bottom:calc(9*var(--u));z-index:6;text-align:center}
-html[data-bp="phone"] #proj .also,html[data-bp="tabp"] #proj .also{position:static;margin:var(--s6) 0 0;text-align:center;font-size:12px;letter-spacing:.1em}
+/* a project card with no full-page screenshot has no Preview button */
+#proj .prev[hidden]{display:none!important}

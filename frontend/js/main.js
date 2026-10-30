@@ -187,20 +187,21 @@ window.addEventListener("load", () => {
     { name: "HiLoPros", key: "hilopros", fh: 5000, dom: "hilopros-com.vercel.app", desc: "React + Node.js site, deployed on Vercel.", tags: ["React", "Node.js", "Vercel"] },
     { name: "Danteswari Daily Needs", key: "danteswari", fh: 4973, dom: "danteswaridailyneeds.com", desc: "MERN e-commerce for daily-needs retail.", tags: ["MERN", "E-commerce"], progress: true },
     { name: "Royal Standard Pub", key: "royalstandardpub", fh: 3716, dom: "royalstandardpub.co.uk", url: "https://www.royalstandardpub.co.uk/?category=biryanis", desc: "Website for a pub.", tags: [] },
+    { name: "Suncoast Home Solutions", key: "suncoast", fh: 810, noFull: true, dom: "suncoasthomesolutions.com", url: "https://www.suncoasthomesolutions.com", desc: "Home-services website for electrical, cooling, water and mold removal in Palm Beach; plus TV scoreboard views for technician rankings and sales goals.", tags: ["React", "Node.js", "REST APIs"] },
   ];
   const PN = LIVE.length, STEP = 360 / PN;
   const linkOf = (p) => p.url || "https://" + p.dom;
   const ring = $(".ring", proj);
   const img = (p, kind, cls, sizes) => `<img class="${cls}" width="1440" height="${kind === "hero" ? 900 : p.fh}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="${ASSETS}projects/${p.key}-${kind}.jpg" data-srcset="${ASSETS}projects/${p.key}-${kind}-720.jpg 720w, ${ASSETS}projects/${p.key}-${kind}.jpg 1440w" data-sizes="${sizes}">`;
   const SZ_RING = "(max-width:640px) 80vw, (max-width:1024px) 400px, 1440px", SZ_CAR = "80vw";
-  const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${img(p, "full", "f", sizes)}<i class="shine"></i></div></div>`;
+  const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${p.noFull ? "" : img(p, "full", "f", sizes)}<i class="shine"></i></div></div>`;
   const infoBits = (p) => `<h3>${p.name}</h3><p class="d">${p.desc}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
   ring.innerHTML = LIVE.map((p, i) => `<article class="scr" tabindex="0" role="link" aria-label="${p.name}: ${i === 0 ? "open " + p.dom : "bring to front"}"><div class="face">${frame(p, SZ_RING)}
     <div class="info">${infoBits(p)}<button class="prev" type="button">Preview</button><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a></div><div class="dimv"></div></div></article>`).join("");
   const car = document.createElement("div"); car.className = "pcar";
   car.innerHTML = `<div class="ptrack" tabindex="0" aria-label="Featured projects, swipe sideways">${LIVE.map((p) => `<article class="slide">${frame(p, SZ_CAR)}<div class="info">${infoBits(p)}<div class="acts"><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a><button class="prev" type="button">Preview</button></div></div></article>`).join("")}</div><div class="pdots">${LIVE.map((p, i) => `<i role="button" aria-label="${p.name}" tabindex="0"></i>`).join("")}</div>`;
   proj.insertBefore(car, $(".meta.b", proj));
-  car.after($(".also", proj));                                                   // the "Also built" line sits under the carousel and its dots (it is absolutely placed under the ring on desktop)
+  LIVE.forEach((p, i) => { if (p.noFull) { $$(".prev", ring)[i].hidden = true; $$(".prev", car)[i].hidden = true; } });
   const cards = $$(".scr", ring), faces = $$(".face", ring), dimvs = $$(".dimv", ring);
   const slides = $$(".slide", car), track = $(".ptrack", car), pdots = $$(".pdots i", car);
 
@@ -212,6 +213,7 @@ window.addEventListener("load", () => {
   const preview = (root) => {
     if (previews.has(root)) return previews.get(root);
     const vp = $(".vp", root), full = $(".f", vp), btn = $(".prev", root);
+    if (!full) { const none = { on: false, start() {}, stop() {} }; previews.set(root, none); return none; }      // a card with no full-page screenshot has no preview
     const o = { on: false, tw: null };
     const label = (t) => { if (btn) btn.textContent = t; };
     o.start = () => {

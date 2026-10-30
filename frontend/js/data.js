@@ -38,6 +38,7 @@ window.DATA = {
     { name: "SaltwaterCam", domain: "saltwatercam.com" },
     { name: "HiLoPros", domain: "hilopros-com.vercel.app" },
     { name: "Royal Standard Pub", domain: "royalstandardpub.co.uk" },
+    { name: "Suncoast Home Solutions", domain: "suncoasthomesolutions.com" },
   ],
   moreBuilds: [
     { name: "AI Roleplay Trainer", kind: "Team project", tech: ["Claude", "TypeScript", "React", "Supabase"], desc: "Adaptive ACA prospect simulations with hidden evaluation, scoring and coaching." },
