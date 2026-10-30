@@ -4,8 +4,8 @@
 <title>Pavan Nadimpalli · Software Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="vendor/lenis.css?v=20261030-8">
-<link rel="stylesheet" href="css/style.css?v=20261030-8">
+<link rel="stylesheet" href="vendor/lenis.css?v=20261030-10">
+<link rel="stylesheet" href="css/style.css?v=20261030-10">
 <script>
 /* which layout is this screen? desk (1025px+), tabl (tablet landscape), tabp (tablet portrait), phone. Set before the first paint so the CSS never flashes the wrong layout. */
 (function(){var d=document.documentElement;function bp(){var w=innerWidth,h=innerHeight;if(w>=1025&&h>=501)return"desk";if(w<=640||h<=500)return"phone";return w>h?"tabl":"tabp"}function set(){d.dataset.bp=bp()}set();addEventListener("resize",set);addEventListener("orientationchange",function(){setTimeout(set,200)})})();
@@ -16,7 +16,8 @@
 <nav class="mnav" id="mnav" aria-label="Sections">
   <a href="#home" style="--i:0">Home</a><a href="#about" style="--i:1">About Me</a><a href="#skills" style="--i:2">Technical Skills</a><a href="#exp" style="--i:3">Experience</a><a href="#proj" style="--i:4">Featured Projects</a><a href="#edu" style="--i:5">Education</a><a href="#resume" style="--i:6">Resume</a><a href="#contact" style="--i:7">Contact</a>
 </nav>
-<a class="lets" href="#contact">Let's talk</a>
+<div class="lopts" id="lopts" role="menu" aria-label="Contact options"><a class="call" role="menuitem" href="tel:+17799102235">Call</a><a role="menuitem" href="mailto:nadimpallipavanms@gmail.com?subject=Hello%20Pavan%20-%20from%20your%20portfolio">Email</a></div>
+<button class="lets" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="lopts">Let's talk</button>
 
 
 <section class="sec" id="home">
@@ -50,7 +51,7 @@
       <div class="loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg><span>Delray Beach, Florida</span></div>
       <div class="icos"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="1.8" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg><span>React</span></div><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 16V8l7 8V8"/></svg><span>Next.js</span></div><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z"/><path d="M9 15.5V9l6 6.5V9"/></svg><span>Node.js</span></div><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3H8a3 3 0 0 0-3 3v4h7v2H6a3 3 0 0 0-3 3v1a3 3 0 0 0 3 3h2v-3a3 3 0 0 1 3-3h4a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3z"/><circle cx="9.5" cy="6.2" r=".8" fill="currentColor"/><path d="M12 21h4a3 3 0 0 0 3-3v-1"/></svg><span>Python</span></div><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2c3.5 3.2 5.5 6.6 5.5 10.2 0 3.4-2.1 6-5.5 7.3-3.4-1.3-5.5-3.9-5.5-7.3C6.5 8.6 8.5 5.2 12 2z"/><path d="M12 19.5V23"/></svg><span>MongoDB</span></div></div></article>
   </div>
-  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a></span><span>Scroll ↓</span></div>
+  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a> · <a href="tel:+17799102235">(779) 910-2235</a></span><span>Scroll ↓</span></div>
 </section>
 
 <section class="sec" id="skills">
@@ -67,7 +68,7 @@
   <i class="dot" style="top:calc(calc(15*var(--u)) - 6px)"></i><div class="item" style="top:calc(15*var(--u))"><span class="date">Oct 2026 – Present</span><h3 class="disp">A Fresh Leaf LLC, United States</h3><p class="role">Software Engineer (Full-Stack &amp; Data Applications)</p><p class="stack">Tech: React, Node.js, Express, MongoDB, REST APIs, GitHub, cPanel / VPS</p><ul><li>Design and maintain modular React/Node.js components, REST API integrations and data models; manage Git branches, pull requests, code review and QA-driven releases.</li><li>Built Suncoast TV scoreboard views for technician rankings, sales metrics and goals; debugged data-display logic and optimized layouts for TV screens.</li><li>Maintain Kingston K9 adoption, donation and media workflows; troubleshoot defects, validate end-to-end integrations and improve performance and reliability.</li><li>Contribute to CCG system design (in progress): inventory schemas, authenticated product workflows, image uploads and owner-review authorization states.</li></ul></div>
   <i class="dot" style="top:calc(calc(46*var(--u)) - 6px)"></i><div class="item" style="top:calc(46*var(--u))"><span class="date">Jan 2025 – Apr 2026</span><h3 class="disp">A Fresh Leaf LLC, United States</h3><p class="role">Full-Stack &amp; Data Science Intern</p><p class="stack">Tech: JavaScript, React, Node.js, Python, SEO analytics, Google Search Console</p><ul><li>Developed reusable frontend/backend features and API integrations; tested user journeys, debugged defects and improved responsive performance.</li><li>Analyzed Search Console and website-performance data to find indexing, SEO and loading issues; implemented and verified data-informed fixes.</li></ul></div>
   <i class="dot" style="top:calc(calc(69*var(--u)) - 6px)"></i><div class="item" style="top:calc(69*var(--u))"><span class="date">Apr 2023 – Jul 2024</span><h3 class="disp">V Build Networks, India</h3><p class="role">Software Engineer</p><p class="stack">Tech: Python, Django, Flask, Cisco APIs, AWS EC2 / RDS / S3, Redis, Nginx, Twilio</p><ul><li>Designed and maintained modular Python/Django/Flask services for incident workflows and reporting; debugged backend logic, validated API integrations and reviewed changes.</li><li>Integrated Cisco monitoring APIs and supported AWS EC2/RDS/S3, Redis caching, Nginx and Twilio alerts; investigated reliability and performance issues.</li></ul></div>
-  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a></span><span>Scroll ↓</span></div>
+  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a> · <a href="tel:+17799102235">(779) 910-2235</a></span><span>Scroll ↓</span></div>
 </section>
 
 <section class="sec" id="proj">
@@ -100,7 +101,7 @@
       <h3>Connect Carpooling</h3><p class="d">Ride coordination with fare calculation, real-time GPS and push notifications.</p>
       <div class="pills"><span>Flutter</span><span>Firebase</span><span>Google Maps</span></div></article>
   </div>
-  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a></span><span>Scroll ↓</span></div>
+  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a> · <a href="tel:+17799102235">(779) 910-2235</a></span><span>Scroll ↓</span></div>
 </section>
 
 <section class="sec" id="edu">
@@ -108,7 +109,7 @@
   <h2 class="disp abs"><span class="ln"><span class="in">Education</span></span></h2>
   <div class="school" style="top:calc(25*var(--u))"><div class="yr" data-to="2026">0</div><div><h3 class="disp">M.S. Data Science</h3><p>Florida Atlantic University. GPA 4.0. May 2026.</p></div></div>
   <div class="school" style="top:calc(58*var(--u))"><div class="yr" data-to="2024">0</div><div><h3 class="disp">B.Tech, Electronics &amp; Communication Engineering</h3><p>B.V. Raju Institute of Technology. April 2024.</p></div></div>
-  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a></span><span>Scroll ↓</span></div>
+  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a> · <a href="tel:+17799102235">(779) 910-2235</a></span><span>Scroll ↓</span></div>
 </section>
 
 <section class="sec" id="resume">
@@ -116,13 +117,13 @@
   <h2 class="disp abs"><span>Resume</span></h2>
   <div class="btns"><a class="btn" href="assets/resume/Pavan_Nadimpalli_Resume.pdf?v=20261030-2" download="Pavan_Nadimpalli_Resume.pdf">Download resume</a><a class="btn o" href="assets/resume/Pavan_Nadimpalli_Resume.pdf?v=20261030-2" target="_blank" rel="noopener">View resume</a><a class="btn o" href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">View on LinkedIn</a></div>
   <p class="txt">Pavan_Nadimpalli_Resume.pdf</p>
-  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a></span><span>Scroll ↓</span></div>
+  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a> · <a href="tel:+17799102235">(779) 910-2235</a></span><span>Scroll ↓</span></div>
 </section>
 
 <section class="sec" id="contact">
   <div class="meta t"><span>08 · Contact</span><span>Developer portfolio</span></div>
   <h2 class="disp abs">Say hello</h2>
-  <div class="mail"><div class="big">nadimpallipavanms@gmail.com</div><div class="tags"><a class="tag" href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin.com/in/pavan-nadimpalli</a><a class="tag" href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github.com/nadimpallipavan</a></div><p class="txt" style="margin-top:calc(2*var(--u));font-size:15px">Open to Software Engineer roles in AI, data and full-stack development in the US.</p></div>
+  <div class="mail"><div class="big">nadimpallipavanms@gmail.com</div><a class="tel" href="tel:+17799102235">(779) 910-2235</a><div class="tags"><a class="tag" href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin.com/in/pavan-nadimpalli</a><a class="tag" href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github.com/nadimpallipavan</a></div><p class="txt" style="margin-top:calc(2*var(--u));font-size:15px">Open to Software Engineer roles in AI, data and full-stack development in the US.</p></div>
   <div class="meta b"><span>Pavan Nadimpalli</span><span>Scroll ↓</span></div>
 </section>
 
@@ -131,8 +132,8 @@
   <div class="lab">Contact</div>
   <div class="left" data-rise><h2 class="disp">Reach<br>me</h2>
     <p class="p">Open to Software Engineer roles in AI, data and full-stack development in the US. Send an email, copy my address, or use the form.</p>
-    <div class="acts"><a class="btn" href="mailto:nadimpallipavanms@gmail.com?subject=Hello%20Pavan%20-%20from%20your%20portfolio">Email me</a><button class="btn o" type="button" id="copyMail">Copy email</button><span class="copied" id="copied" role="status" aria-live="polite">Copied ✓</span></div>
-    <div class="addr">nadimpallipavanms@gmail.com</div></div>
+    <div class="acts"><a class="btn" href="mailto:nadimpallipavanms@gmail.com?subject=Hello%20Pavan%20-%20from%20your%20portfolio">Email me</a><a class="btn" href="tel:+17799102235">Call me · (779) 910-2235</a><button class="btn o" type="button" id="copyMail">Copy email</button><span class="copied" id="copied" role="status" aria-live="polite">Copied ✓</span></div>
+    <div class="addr">nadimpallipavanms@gmail.com<br><a class="tel" href="tel:+17799102235">(779) 910-2235</a></div></div>
   <form class="form" id="cform" novalidate data-rise>
     <h3>Send a message</h3>
     <label class="f"><span>Name</span><input name="name" type="text" autocomplete="name" placeholder="Your name"><i class="bar"></i></label>
@@ -142,12 +143,12 @@
     <div class="msg" id="cmsg" role="status" aria-live="polite"></div>
     <button class="btn send" type="submit">Send</button>
   </form>
-  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a></span><span>Thanks for visiting</span></div>
+  <div class="meta b"><span><a href="https://github.com/nadimpallipavan" target="_blank" rel="noopener">github</a> · <a href="https://www.linkedin.com/in/pavan-nadimpalli" target="_blank" rel="noopener">linkedin</a> · <a href="tel:+17799102235">(779) 910-2235</a></span><span>Thanks for visiting</span></div>
 </section>
 
-<script src="vendor/gsap.min.js?v=20261030-8"></script>
-<script src="vendor/ScrollTrigger.min.js?v=20261030-8"></script>
-<script src="vendor/lenis.min.js?v=20261030-8"></script>
-<script src="js/data.js?v=20261030-8"></script>
-<script src="js/main.js?v=20261030-8"></script>
+<script src="vendor/gsap.min.js?v=20261030-10"></script>
+<script src="vendor/ScrollTrigger.min.js?v=20261030-10"></script>
+<script src="vendor/lenis.min.js?v=20261030-10"></script>
+<script src="js/data.js?v=20261030-10"></script>
+<script src="js/main.js?v=20261030-10"></script>
 </body></html>

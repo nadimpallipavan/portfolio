@@ -164,12 +164,19 @@ window.addEventListener("load", () => {
     };
     mbtn.addEventListener("click", () => setMenu(!mnav.classList.contains("open")));
     addEventListener("keydown", (e) => { if (e.key === "Escape" && mnav.classList.contains("open")) setMenu(false); });
-    $$("a", mnav).concat($(".brand", bar), lets).forEach((a) => a.addEventListener("click", (e) => {
+    $$("a", mnav).concat($(".brand", bar)).forEach((a) => a.addEventListener("click", (e) => {
       e.preventDefault(); const id = a.getAttribute("href").slice(1); setMenu(false); requestAnimationFrame(() => goTo(id));
     }));
+    /* the "Let's talk" pill opens two small options, Call and Email; a tap elsewhere, Escape, or choosing one closes them */
+    const lopts = $("#lopts");
+    const setOpts = (open) => { lopts.classList.toggle("open", open); lets.setAttribute("aria-expanded", open); };
+    lets.addEventListener("click", (e) => { e.stopPropagation(); setOpts(!lopts.classList.contains("open")); });
+    lopts.addEventListener("click", () => setTimeout(() => setOpts(false), 50));
+    document.addEventListener("click", (e) => { if (!lopts.contains(e.target) && e.target !== lets) setOpts(false); });
+    addEventListener("keydown", (e) => { if (e.key === "Escape") setOpts(false); });
     /* the bar hides while you scroll down and shows again as soon as you scroll up; the pill appears after Home and hides inside Contact */
     let ly = window.scrollY, inC = false, inR = false;
-    const sync = () => { lets.classList.toggle("show", compact() && window.scrollY > innerHeight * 0.85 && !inC && !inR && !mnav.classList.contains("open")); };
+    const sync = () => { const on = compact() && window.scrollY > innerHeight * 0.85 && !inC && !inR && !mnav.classList.contains("open"); lets.classList.toggle("show", on); if (!on) setOpts(false); };
     new IntersectionObserver((e) => { inC = e.some((x) => x.isIntersecting); sync(); }).observe($("#contact"));
     new IntersectionObserver((e) => { inR = e.some((x) => x.isIntersecting); sync(); }).observe($("#reach"));
     addEventListener("scroll", () => {

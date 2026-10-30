@@ -52,6 +52,6 @@ window.DATA = {
     { year: 2026, title: "M.S. Data Science", school: "Florida Atlantic University", detail: "GPA 4.0. May 2026." },
     { year: 2024, title: "B.Tech, Electronics & Communication Engineering", school: "B.V. Raju Institute of Technology", detail: "April 2024." },
   ],
-  contact: { email: "nadimpallipavanms@gmail.com", linkedin: "https://www.linkedin.com/in/pavan-nadimpalli", github: "https://github.com/nadimpallipavan", line: "Open to Software Engineer roles in AI, data and full-stack development in the US." },
+  contact: { email: "nadimpallipavanms@gmail.com", phone: "(779) 910-2235", tel: "tel:+17799102235", linkedin: "https://www.linkedin.com/in/pavan-nadimpalli", github: "https://github.com/nadimpallipavan", line: "Open to Software Engineer roles in AI, data and full-stack development in the US." },
   resume: { download: "Download resume", linkedin: "View on LinkedIn" },
 };
