@@ -71,6 +71,8 @@ Set these in `.env` locally, or in the hosting control panel. Never commit a rea
 
 The server never caches `index.html`, and caches CSS, JavaScript and images for a year. Every CSS and JS link in `frontend/index.html` ends in a `?v=` number. When you change a CSS or JS file, bump that number in all those links so visitors get the new file.
 
+**When you replace any image or the resume, bump `ASSET_VERSION` in `frontend/js/main.js`.** The resume, its page image and all project screenshots are loaded with `?v=ASSET_VERSION` on their addresses, so a new version shows up straight away even though images are cached for a year. The resume PDF itself is never cached.
+
 ## Deploy on Hostinger (Node.js app)
 
 1. In hPanel, open **Websites → Add website → Node.js Apps** (or **Node.js** on a hosting plan that supports it).

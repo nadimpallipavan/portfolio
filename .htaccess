@@ -36,8 +36,9 @@ RewriteRule ^(.*)$ frontend/$1 [L]
   Require all denied
 </FilesMatch>
 
-# 5. Caching. HTML is never cached; CSS, JS, images and fonts are cached for a year.
-#    Every CSS and JS link in index.html ends in ?v=NUMBER, so a changed file gets a new address.
+# 5. Caching. HTML and the resume PDF are never cached; CSS, JS, images and fonts are cached for a year.
+#    Every CSS and JS link in index.html ends in ?v=NUMBER, and the resume and project screenshots use ASSET_VERSION in main.js,
+#    so a changed file gets a new address.
 <IfModule mod_headers.c>
   <FilesMatch "\.html?$">
     Header set Cache-Control "no-cache"
@@ -46,7 +47,7 @@ RewriteRule ^(.*)$ frontend/$1 [L]
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
   <FilesMatch "\.pdf$">
-    Header set Cache-Control "public, max-age=86400"
+    Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>
 

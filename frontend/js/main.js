@@ -5,6 +5,11 @@
 /* Folder of the images, found from this script's own address (so it works wherever the page is served). */
 const ASSETS = document.currentScript ? new URL("../assets/", document.currentScript.src).href : "assets/";
 
+/* One shared version number for the resume and every project screenshot. Their addresses end in ?v=ASSET_VERSION, so a replaced file gets a
+   new address and shows up at once, even though images are cached for a year. When you replace any image or the resume, change this number. */
+const ASSET_VERSION = "20261030";
+const versioned = (url) => url + "?v=" + ASSET_VERSION;
+
 /* =========================================================================
    1. SCROLL SETUP: GSAP + ScrollTrigger, Lenis smooth scroll (mouse and trackpad only)
    ========================================================================= */
@@ -136,8 +141,8 @@ window.addEventListener("load", () => {
     });
     /* RESUME: page 1 of the resume as a sheet (opens the PDF when tapped) */
     const sh = document.createElement("a");
-    sh.className = "sheet"; sh.href = ASSETS + "resume/Pavan_Nadimpalli_Resume.pdf"; sh.target = "_blank"; sh.rel = "noopener"; sh.setAttribute("aria-label", "Open the resume PDF");
-    sh.innerHTML = `<img src="${ASSETS}resume/resume-page1.jpg" width="900" height="1166" alt="Page 1 of the resume" loading="lazy" decoding="async">`;
+    sh.className = "sheet"; sh.href = versioned(ASSETS + "resume/Pavan_Nadimpalli_Resume.pdf"); sh.target = "_blank"; sh.rel = "noopener"; sh.setAttribute("aria-label", "Open the resume PDF");
+    sh.innerHTML = `<img src="${versioned(ASSETS + "resume/resume-page1.jpg")}" width="900" height="1166" alt="Page 1 of the resume" loading="lazy" decoding="async">`;
     $("#resume h2").after(sh);
     /* CONTACT: a second title made of letters that can stand up (the first title stays untouched for other screens) */
     const h2 = $("#contact h2"), sp = document.createElement("h2");
@@ -192,7 +197,7 @@ window.addEventListener("load", () => {
   const PN = LIVE.length, STEP = 360 / PN;
   const linkOf = (p) => p.url || "https://" + p.dom;
   const ring = $(".ring", proj);
-  const img = (p, kind, cls, sizes) => `<img class="${cls}" width="1440" height="${kind === "hero" ? 900 : p.fh}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="${ASSETS}projects/${p.key}-${kind}.jpg" data-srcset="${ASSETS}projects/${p.key}-${kind}-720.jpg 720w, ${ASSETS}projects/${p.key}-${kind}.jpg 1440w" data-sizes="${sizes}">`;
+  const img = (p, kind, cls, sizes) => `<img class="${cls}" width="1440" height="${kind === "hero" ? 900 : p.fh}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="${versioned(ASSETS + "projects/" + p.key + "-" + kind + ".jpg")}" data-srcset="${versioned(ASSETS + "projects/" + p.key + "-" + kind + "-720.jpg")} 720w, ${versioned(ASSETS + "projects/" + p.key + "-" + kind + ".jpg")} 1440w" data-sizes="${sizes}">`;
   const SZ_RING = "(max-width:640px) 80vw, (max-width:1024px) 400px, 1440px", SZ_CAR = "80vw";
   const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${p.noFull ? "" : img(p, "full", "f", sizes)}<i class="shine"></i></div></div>`;
   const infoBits = (p) => `<h3>${p.name}</h3><p class="d">${p.desc}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
@@ -237,6 +242,9 @@ window.addEventListener("load", () => {
     const b = $(".prev", root);
     b.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); const p = preview(root); p.on ? p.stop() : p.start(); });
   });
+
+  /* the Download and View buttons use the shared version too, so one number controls every resume link */
+  $$('a[href*="Pavan_Nadimpalli_Resume.pdf"]').forEach((a) => a.setAttribute("href", versioned(a.getAttribute("href").split("?")[0])));
 
   /* CONTACT: copy email and the form (the same on every screen size) */
   {
