@@ -1,4 +1,4 @@
-/* Portfolio content. Text comes from site/CONTENT-2026.md (the October 2026 resume), word for word. The phone number is not included on purpose. */
+/* Portfolio content. Text comes from site/CONTENT-2026.md (the October 2026 resume), word for word. */
 window.DATA = {
   name: "Pavan Nadimpalli",
   title: "Software Engineer · AI & Data Applications",
@@ -31,6 +31,7 @@ window.DATA = {
       "Integrated Cisco monitoring APIs and supported AWS EC2/RDS/S3, Redis caching, Nginx and Twilio alerts; investigated reliability and performance issues." ] },
   ],
   projects: [
+    { name: "Goodway Laundromat", domain: "goodwaylaundromat.com", url: "https://goodwaylaundromat.com", tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Firebase"], desc: "Website for a Lantana, FL laundromat: self-service, wash & fold and doorstep pickup and delivery, with scroll-driven video sections and light/dark mode." },
     { name: "A Fresh Leaf", domain: "afreshleaf.com" },
     { name: "Kingston K9 Rescue Reserve", domain: "kingstonk9.com" },
     { name: "GoMunchz", domain: "gomunchz.com" },
@@ -53,5 +54,4 @@ window.DATA = {
     { year: 2024, title: "B.Tech, Electronics & Communication Engineering", school: "B.V. Raju Institute of Technology", detail: "April 2024." },
   ],
   contact: { email: "nadimpallipavanms@gmail.com", phone: "(779) 910-2235", tel: "tel:+17799102235", linkedin: "https://www.linkedin.com/in/pavan-nadimpalli", github: "https://github.com/nadimpallipavan", line: "Open to Software Engineer roles in AI, data and full-stack development in the US." },
-  resume: { download: "Download resume", linkedin: "View on LinkedIn" },
 };

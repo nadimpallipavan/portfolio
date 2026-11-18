@@ -127,6 +127,9 @@ a.tag{text-decoration:none;color:inherit}a.tag:hover{border-color:var(--acc)}
 #proj .vp .f{height:auto;opacity:0}
 #proj .vp.full .f{opacity:1}
 #proj .vp.full .h{opacity:0}
+#proj .vp .gv{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s}
+#proj .vp .gv.on{opacity:1}
+#proj .badge{display:inline-block;margin:0 0 8px;padding:3px 9px;border-radius:3px;background:var(--acc);color:#111;font:700 10.5px/1.3 var(--body);letter-spacing:.08em;text-transform:uppercase}
 #proj .info{position:relative;padding:18px 2px 0}
 #proj .info h3{font:400 30px/1 var(--disp);text-transform:uppercase;margin:0 0 7px;color:var(--fg)}
 #proj .info .d{margin:0 0 10px;font-size:13px;line-height:1.4;color:#a9a9a3}
@@ -195,11 +198,6 @@ a.tag{text-decoration:none;color:inherit}a.tag:hover{border-color:var(--acc)}
 #edu .yr{font:400 calc(20*var(--u))/1 var(--disp);color:var(--acc);min-width:40vw}
 #edu .school h3{font-size:calc(4.6*var(--u));margin:0 0 6px}
 #edu .school p{margin:0;color:var(--muted);font-size:16px}
-/* 7 Resume */
-#resume h2{left:0;right:0;top:calc(19*var(--u));text-align:center;font-size:calc(30*var(--u))}
-#resume .btns{position:absolute;left:0;right:0;top:calc(68*var(--u));text-align:center}
-#resume .btn{font-size:20px;padding:16px 38px}#resume .btn.o{padding:14px 36px}
-#resume .txt{position:absolute;left:0;right:0;top:calc(80*var(--u));text-align:center;font-size:15px}
 /* 8 Contact */
 #contact h2{left:50%;top:calc(18*var(--u));white-space:nowrap;transform-origin:50% 50%}
 #contact .mail{position:absolute;left:0;right:0;top:calc(64*var(--u));text-align:center}
@@ -223,7 +221,7 @@ html.touch #more .mb:hover{translate:0 0}
 .btn,#reach button.btn,#proj .prev,#proj .visit{touch-action:manipulation}
 
 /* ---- 3D scroll motion helpers: hidden everywhere except phones up to 640px wide (see the rules at the very end) ---- */
-.yrbg,.ghost,.sheet,.sayp,.shine,.jdate,.etop,.eedge,.espine{display:none}
+.yrbg,.ghost,.sayp,.shine,.jdate,.etop,.eedge,.espine{display:none}
 .mbi,.mbf,.mbk,.edi{display:contents}
 
 /* ===================== PHONE + TABLET (only when data-bp is not "desk"; desktop above is unchanged) =====================
@@ -369,15 +367,6 @@ html:not([data-bp="desk"]) #edu .school{position:relative;left:auto;right:auto;t
 html:not([data-bp="desk"]) #edu .yr{min-width:0;font-size:clamp(56px,16vw,96px);line-height:1}
 html:not([data-bp="desk"]) #edu .school h3{margin:0 0 var(--s2);font-size:clamp(24px,7vw,32px);line-height:1.1}
 html:not([data-bp="desk"]) #edu .school p{max-width:60ch;font-size:var(--t-body);line-height:1.6}
-/* ---- Resume ---- */
-html:not([data-bp="desk"]) #resume h2{position:static;margin:auto 0 var(--s8);font-size:var(--t-display);line-height:1;text-align:left}
-html:not([data-bp="desk"]) #resume .mask{display:block;overflow:hidden;padding:.06em 0}
-html:not([data-bp="desk"]) #resume .m-in{display:block}
-html:not([data-bp="desk"]) #resume .btns{position:static;display:flex;flex-direction:column;gap:var(--s3);text-align:left}
-html[data-bp^="tab"] #resume .btns{flex-direction:row;flex-wrap:wrap}
-html:not([data-bp="desk"]) #resume .btn{margin:0;display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 var(--s6);font-size:16px}
-html:not([data-bp="desk"]) #resume .btn.o{padding:0 var(--s6)}
-html:not([data-bp="desk"]) #resume .txt{position:static;margin:var(--s6) 0 auto;text-align:left;font-size:14px}
 /* ---- Contact ---- */
 html:not([data-bp="desk"]) #contact h2{position:static;left:auto;margin:auto 0 var(--s8);font-size:var(--t-display);line-height:1;text-align:center;white-space:normal;transform-origin:50% 50%}
 html:not([data-bp="desk"]) #contact .mail{position:static;margin-bottom:auto;text-align:center}
@@ -428,8 +417,6 @@ html[data-bp="phone"] #edu .edi{display:block;position:relative;margin-bottom:va
 html[data-bp="phone"] #edu .school{position:relative;z-index:1;margin:0;transform-origin:50% 0;backface-visibility:hidden}
 html[data-bp="phone"] #edu .yr{display:none}
 html[data-bp="phone"] #edu .ghost{display:block;position:absolute;z-index:0;left:0;top:0;font:400 clamp(88px,28vw,140px)/1 var(--disp);color:transparent;-webkit-text-stroke:1.5px #e8dfc8;pointer-events:none}
-html[data-bp="phone"] #resume .sheet{display:block;position:relative;margin:0 0 var(--s8);overflow:hidden;border-radius:4px;background:#fff;box-shadow:0 24px 48px rgba(0,0,0,.6);transform-origin:50% 100%;backface-visibility:hidden}
-html[data-bp="phone"] #resume .sheet img{display:block;width:100%;height:auto}
 html[data-bp="phone"] #contact h2:not(.sayp){display:none}
 html[data-bp="phone"] #contact .sayp{display:block;margin:auto 0 var(--s8);font-size:clamp(56px,20vw,96px);line-height:1;text-align:center;color:var(--fg)}
 html[data-bp="phone"] #contact .sayp .wd{display:inline-block;white-space:nowrap;margin:0 .12em}

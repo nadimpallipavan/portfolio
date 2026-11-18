@@ -1,13 +1,13 @@
 /* Pavan Nadimpalli portfolio: scroll setup and every section's animation.
-   Order: 1) scroll setup  2) one-time page setup  3) animations per screen size (Home, About, Skills, Experience, Projects, Education, Resume, Contact)  4) start-up.
+   Order: 1) scroll setup  2) one-time page setup  3) animations per screen size (Home, About, Skills, Experience, Projects, Education, Contact)  4) start-up.
    Plain scripts, no build step. Needs gsap, ScrollTrigger and Lenis from vendor/ and the content in data.js. */
 
 /* Folder of the images, found from this script's own address (so it works wherever the page is served). */
 const ASSETS = document.currentScript ? new URL("../assets/", document.currentScript.src).href : "assets/";
 
-/* One shared version number for the resume and every project screenshot. Their addresses end in ?v=ASSET_VERSION, so a replaced file gets a
-   new address and shows up at once, even though images are cached for a year. When you replace any image or the resume, change this number. */
-const ASSET_VERSION = "20261030-2";
+/* One shared version number for every project screenshot and preview video. Their addresses end in ?v=ASSET_VERSION, so a replaced file gets a
+   new address and shows up at once, even though images are cached for a year. When you replace any image or video, change this number. */
+const ASSET_VERSION = "20261118-1";
 const versioned = (url) => url + "?v=" + ASSET_VERSION;
 
 /* =========================================================================
@@ -101,8 +101,6 @@ window.addEventListener("load", () => {
       [...it.children].filter((ch) => !ch.classList.contains("date")).forEach((ch) => jc.appendChild(ch));
       it.appendChild(jc); const cd = document.createElement("i"); cd.className = "cdot"; it.appendChild(cd); jobs.appendChild(it);
     });
-    /* RESUME: the title gets a mask for its reveal */
-    const rs = $("#resume h2 span"); rs.innerHTML = '<span class="mask"><span class="m-in">' + rs.textContent + "</span></span>";
     /* SKILLS: the skill groups as pill grids; tapping a pill turns it red */
     const sk = $("#skills"), sg = document.createElement("div"); sg.className = "sgroups";
     sg.innerHTML = DATA.skillGroups.map(([t, a]) => `<div><h4>${t}</h4><div class="pl">${a.map((s) => `<button type="button" class="pill2">${s}</button>`).join("")}</div></div>`).join("");
@@ -139,11 +137,6 @@ window.addEventListener("load", () => {
       if ($$("#edu .school").indexOf(s) < DATA.education.length - 1) w.appendChild(div("espine"));                                             // the spine that links the cards into a timeline
       s.parentNode.insertBefore(w, s); w.append(g, g2, s);
     });
-    /* RESUME: page 1 of the resume as a sheet (opens the PDF when tapped) */
-    const sh = document.createElement("a");
-    sh.className = "sheet"; sh.href = versioned(ASSETS + "resume/Pavan_Nadimpalli_Resume.pdf"); sh.target = "_blank"; sh.rel = "noopener"; sh.setAttribute("aria-label", "Open the resume PDF");
-    sh.innerHTML = `<img src="${versioned(ASSETS + "resume/resume-page1.jpg")}" width="900" height="1166" alt="Page 1 of the resume" loading="lazy" decoding="async">`;
-    $("#resume h2").after(sh);
     /* CONTACT: a second title made of letters that can stand up (the first title stays untouched for other screens) */
     const h2 = $("#contact h2"), sp = document.createElement("h2");
     sp.className = "disp sayp"; sp.setAttribute("aria-label", "Say hello");
@@ -192,6 +185,7 @@ window.addEventListener("load", () => {
   /* PROJECTS: real screenshots (720px copies for phones via srcset), a 3D ring for desktop and tablet, a swipe carousel for phones */
   const proj = $("#proj");
   const LIVE = [
+    { name: "Goodway Laundromat", key: "goodway", video: true, noFull: true, dom: "goodwaylaundromat.com", url: "https://goodwaylaundromat.com", badge: "Latest launch", desc: "Website for a Lantana, FL laundromat: self-service, wash & fold and doorstep pickup and delivery, with scroll-driven video sections and light/dark mode.", tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Firebase"] },
     { name: "A Fresh Leaf", key: "afreshleaf", fh: 5000, dom: "afreshleaf.com", desc: "Company site.", tags: ["MERN stack", "SEO", "Google Search Console"] },
     { name: "GoMunchz", key: "gomunchz", fh: 5000, dom: "gomunchz.com", desc: "MERN e-commerce with product catalog, cart, checkout and order management.", tags: ["MERN", "E-commerce"] },
     { name: "Kingston K9 Rescue Reserve", key: "kingstonk9", fh: 5000, dom: "kingstonk9.com", desc: "React + Node.js site for a business client.", tags: ["React", "Node.js"] },
@@ -206,8 +200,8 @@ window.addEventListener("load", () => {
   const ring = $(".ring", proj);
   const img = (p, kind, cls, sizes) => `<img class="${cls}" width="1440" height="${kind === "hero" ? 900 : p.fh}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="${versioned(ASSETS + "projects/" + p.key + "-" + kind + ".jpg")}" data-srcset="${versioned(ASSETS + "projects/" + p.key + "-" + kind + "-720.jpg")} 720w, ${versioned(ASSETS + "projects/" + p.key + "-" + kind + ".jpg")} 1440w" data-sizes="${sizes}">`;
   const SZ_RING = "(max-width:640px) 80vw, (max-width:1024px) 400px, 1440px", SZ_CAR = "80vw";
-  const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${p.noFull ? "" : img(p, "full", "f", sizes)}<i class="shine"></i></div></div>`;
-  const infoBits = (p) => `<h3>${p.name}</h3><p class="d">${p.desc}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
+  const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${p.noFull ? "" : img(p, "full", "f", sizes)}${p.video ? `<video class="gv" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="${ASSETS + "projects/" + p.key + "-preview"}"></video>` : ""}<i class="shine"></i></div></div>`;
+  const infoBits = (p) => `${p.badge ? `<span class="badge">${p.badge}</span>` : ""}<h3>${p.name}</h3><p class="d">${p.desc}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
   ring.innerHTML = LIVE.map((p, i) => `<article class="scr" tabindex="0" role="link" aria-label="${p.name}: ${i === 0 ? "open " + p.dom : "bring to front"}"><div class="face">${frame(p, SZ_RING)}
     <div class="info">${infoBits(p)}<button class="prev" type="button">Preview</button><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a></div><div class="dimv"></div></div></article>`).join("");
   const car = document.createElement("div"); car.className = "pcar";
@@ -219,6 +213,18 @@ window.addEventListener("load", () => {
 
   /* lazy loading: images get their address only when needed; the small copy is chosen by srcset */
   const loadImg = (im) => { if (im && !im.getAttribute("src")) { im.srcset = im.dataset.srcset; im.sizes = im.dataset.sizes; im.src = im.dataset.src; } };
+
+  /* preview video (Goodway): plays muted and looping only while its card is the front/centre card and the Projects section is on screen */
+  const gv = { vis: false, ring: -1, car: -1, near: false };
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const setVid = (root, want) => {
+    const v = $("video.gv", root); if (!v) return;
+    if (v.preload === "none" && gv.near) { v.src = versioned(v.dataset.src + (matchMedia("(max-width:640px)").matches ? "-720" : "") + ".mp4"); v.preload = "metadata"; }
+    if (want && !still && v.src) { v.play().then(() => v.classList.add("on"), () => {}); } else v.pause();
+  };
+  const vidSync = () => { cards.forEach((c, i) => setVid(c, gv.vis && i === gv.ring)); slides.forEach((c, i) => setVid(c, gv.vis && i === gv.car)); };
+  new IntersectionObserver((e) => { gv.vis = e[0].isIntersecting; vidSync(); }, { threshold: 0.1 }).observe(proj);
+  new IntersectionObserver((e, o) => { if (e.some((x) => x.isIntersecting)) { gv.near = true; vidSync(); o.disconnect(); } }, { rootMargin: "1200px 0px" }).observe(proj);
 
   /* preview: show the full-page screenshot and scroll it from top to bottom in about 6 seconds */
   const previews = new Map();
@@ -249,9 +255,6 @@ window.addEventListener("load", () => {
     const b = $(".prev", root);
     b.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); const p = preview(root); p.on ? p.stop() : p.start(); });
   });
-
-  /* the Download and View buttons use the shared version too, so one number controls every resume link */
-  $$('a[href*="Pavan_Nadimpalli_Resume.pdf"]').forEach((a) => a.setAttribute("href", versioned(a.getAttribute("href").split("?")[0])));
 
   /* CONTACT: copy email and the form (the same on every screen size) */
   {
@@ -580,7 +583,7 @@ window.addEventListener("load", () => {
           loadImg($(".vp .h", cards[i])); loadImg($(".vp .f", cards[i]));
           if (hover !== -1 && hover !== i) { preview(cards[hover]).stop(); hover = -1; }
           cards.forEach((c, j) => { if (j !== i) { const p = previews.get(c); if (p && p.on) p.stop(); } });
-          front = i;
+          front = i; gv.ring = i; vidSync();
         };
         const MIN = D ? 0.68 : 0.76;
         const light = () => {
@@ -607,7 +610,7 @@ window.addEventListener("load", () => {
           on(c, "click", (e) => { if (e.target.closest(".visit,.prev")) return; if (i === front) open(); else toFront(); });
           on(c, "keydown", (e) => { if (e.key === "Enter") { if (i === front) open(); else toFront(); } });
         });
-        dispose.push(() => cards.forEach((c) => { const p = previews.get(c); if (p && p.on) p.stop(); c.classList.remove("front"); }));
+        dispose.push(() => { gv.ring = -1; vidSync(); cards.forEach((c) => { const p = previews.get(c); if (p && p.on) p.stop(); c.classList.remove("front"); }); });
       } else {
         /* phone: swipe carousel, one card at a time (scroll-snap), small dots under it */
         const heroes = $$(".vp .h", car);
@@ -620,7 +623,7 @@ window.addEventListener("load", () => {
           let best = 0, bd = 1e9;
           slides.forEach((s, i) => { const d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = i; } });
           if (best === cur) return;
-          cur = best; pdots.forEach((d, i) => d.classList.toggle("on", i === best));
+          cur = best; gv.car = best; vidSync(); pdots.forEach((d, i) => d.classList.toggle("on", i === best));
           slides.forEach((s, i) => { if (i !== best) { const p = previews.get(s); if (p && p.on) p.stop(); } });
         };
         on(track, "scroll", () => { if (!raf) raf = requestAnimationFrame(setDot); }, { passive: true });
@@ -630,7 +633,7 @@ window.addEventListener("load", () => {
         });
         setDot();
         gsap.from(car, { y: 40, opacity: 0, ease: "power2.out", scrollTrigger: { trigger: proj, start: "top 85%", end: "top 40%", scrub: true } });
-        dispose.push(() => slides.forEach((s) => { const p = previews.get(s); if (p && p.on) p.stop(); }));
+        dispose.push(() => { gv.car = -1; vidSync(); slides.forEach((s) => { const p = previews.get(s); if (p && p.on) p.stop(); }); });
       }
     }
 
@@ -658,27 +661,6 @@ window.addEventListener("load", () => {
       $$(".yr", edu).forEach((el) => {
         const o = { n: 0 }, to = +el.dataset.to;
         gsap.to(o, { n: to, snap: { n: 1 }, ease: "none", onUpdate: () => (el.textContent = o.n), scrollTrigger: { trigger: el, start: "top 95%", end: "top 45%", scrub: true } });
-      });
-    }
-
-    /* =====================================================================
-       RESUME
-       ===================================================================== */
-    {
-      const res = $("#resume"), rt = $("h2 span", res);
-      gsap.set(rt, { display: "inline-block" });
-      gsap.set($$(".btn, .txt", res), { autoAlpha: 0, y: 30 });
-      pin(res, 90)
-        .fromTo(rt, { scale: () => Math.min(1.65, (innerWidth * 0.94) / (rt.offsetWidth || 1)) }, { scale: 1, duration: 1, ease: "power3.out" }, 0)
-        .to($$(".btn, .txt", res), { autoAlpha: 1, y: 0, stagger: 0.1, duration: 0.4 }, 0.7);
-      if (fine) $$(".btn", res).forEach((b) => {
-        const qx = gsap.quickTo(b, "x", { duration: 0.4, ease: "power3" }), qy = gsap.quickTo(b, "y", { duration: 0.4, ease: "power3" });
-        on(res, "mousemove", (e) => {
-          const r = b.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-          const dx = e.clientX - cx, dy = e.clientY - cy, d = Math.hypot(dx, dy);
-          if (d < 220) { qx(dx * 0.35); qy(dy * 0.35); } else { qx(0); qy(0); }
-        });
-        on(res, "mouseleave", () => { qx(0); qy(0); });
       });
     }
 
@@ -903,7 +885,7 @@ window.addEventListener("load", () => {
           loadImg($(".vp .h", cards[i])); loadImg($(".vp .f", cards[i]));
           if (hover !== -1 && hover !== i) { preview(cards[hover]).stop(); hover = -1; }
           cards.forEach((c, j) => { if (j !== i) { const p = previews.get(c); if (p && p.on) p.stop(); } });
-          front = i;
+          front = i; gv.ring = i; vidSync();
         };
         const light = () => {
           faces.forEach((f, i) => {
@@ -929,7 +911,7 @@ window.addEventListener("load", () => {
           on(c, "click", (e) => { if (e.target.closest(".visit,.prev")) return; if (i === front) open(); else toFront(); });
           on(c, "keydown", (e) => { if (e.key === "Enter") { if (i === front) open(); else toFront(); } });
         });
-        dispose.push(() => cards.forEach((c) => { const p = previews.get(c); if (p && p.on) p.stop(); c.classList.remove("front"); }));
+        dispose.push(() => { gv.ring = -1; vidSync(); cards.forEach((c) => { const p = previews.get(c); if (p && p.on) p.stop(); c.classList.remove("front"); }); });
       } else {
         /* swipe carousel (scroll-snap): the centre card is scale 1, the side cards 0.92 and dimmed; dots show where you are */
         const heroes = $$(".vp .h", car);
@@ -949,7 +931,7 @@ window.addEventListener("load", () => {
           });
           if (best === cur) return;
           if (P3 && cur !== -1) gsap.fromTo($(".shine", slides[best]), { xPercent: -130 }, { xPercent: 260, duration: 0.9, ease: "power2.inOut" });   // one soft sweep when a card becomes the centre card
-          cur = best; pdots.forEach((d, i) => d.classList.toggle("on", i === best));
+          cur = best; gv.car = best; vidSync(); pdots.forEach((d, i) => d.classList.toggle("on", i === best));
           slides.forEach((s, i) => { if (i !== best) { const p = previews.get(s); if (p && p.on) p.stop(); } });
         };
         on(track, "scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
@@ -961,7 +943,7 @@ window.addEventListener("load", () => {
         });
         update();
         gsap.fromTo(car, { y: 40, opacity: 0 }, { y: 0, opacity: 1, ease: "power2.out", scrollTrigger: sc(proj, "top 85%", "top 45%") });
-        dispose.push(() => slides.forEach((s) => { const p = previews.get(s); if (p && p.on) p.stop(); }));
+        dispose.push(() => { gv.car = -1; vidSync(); slides.forEach((s) => { const p = previews.get(s); if (p && p.on) p.stop(); }); });
       }
     }
 
@@ -1013,21 +995,6 @@ window.addEventListener("load", () => {
     }
 
     /* ---------------------------------------------------------------------
-       RESUME: the title reveals behind a mask, the buttons rise in
-       --------------------------------------------------------------------- */
-    {
-      const res = $("#resume");
-      gsap.fromTo($(".m-in", res), { yPercent: 110 }, { yPercent: 0, ease: "power3.out", scrollTrigger: sc(res, "top 80%", "top 40%") });
-      if (P3) {
-        /* desk to hand: the sheet lies on a desk (rotateX 60, scale .85) and lifts to face you as you scroll; the buttons rise in after it */
-        const sheet = $(".sheet", res);
-        gsap.set(sheet, { transformPerspective: 1000, transformOrigin: "50% 100%" });
-        gsap.fromTo(sheet, { rotationX: 60, scale: 0.85 }, { rotationX: 0, scale: 1, ease: "none", scrollTrigger: sc(sheet, "top 92%", "center 55%") });
-      }
-      $$(".btn, .txt", res).forEach((el) => rise(el, 24));
-    }
-
-    /* ---------------------------------------------------------------------
        CONTACT: "SAY HELLO" scales from 0.8 to 1, then the email, links, buttons and form fields rise one by one
        --------------------------------------------------------------------- */
     {
@@ -1064,7 +1031,7 @@ window.addEventListener("load", () => {
   /* 4. START-UP: after fonts and images have loaded, re-measure once */
   const imgsReady = Promise.all($$("img").filter((i) => i.getAttribute("src") && !i.complete).map((i) => new Promise((r) => { i.addEventListener("load", r, { once: true }); i.addEventListener("error", r, { once: true }); })));
   Promise.all([document.fonts.ready, imgsReady]).then(() => { lenis.resize(); ScrollTrigger.refresh(); });
-  /* open index.html#proj (or #about, #resume ...) to land straight on a section */
+  /* open index.html#proj (or #about, #contact ...) to land straight on a section */
   if (location.hash) document.fonts.ready.then(() => setTimeout(() => {
     ScrollTrigger.refresh();
     const st = ScrollTrigger.getAll().find((t) => t.pin && t.trigger && "#" + t.trigger.id === location.hash);

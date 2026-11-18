@@ -57,8 +57,7 @@ app.use(
     lastModified: true,
     setHeaders(res, file) {
       if (file.endsWith(".html")) res.setHeader("Cache-Control", "no-cache");
-      else if (file.endsWith(".pdf")) res.setHeader("Cache-Control", "no-cache");
-      else if (/\.(css|js|woff2?|png|jpe?g|webp|svg|ico)$/i.test(file)) res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      else if (/\.(css|js|woff2?|png|jpe?g|webp|svg|ico|mp4)$/i.test(file)) res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
     },
   })
 );

@@ -1,6 +1,6 @@
 # Pavan Nadimpalli · Software Engineer portfolio
 
-My personal developer portfolio: a scroll-driven site (Home, About Me, Technical Skills, Experience, Featured Projects, Education, Resume, Contact) with a small Node.js backend that receives the contact form and emails it to me.
+My personal developer portfolio: a scroll-driven site (Home, About Me, Technical Skills, Experience, Featured Projects, Education, Contact) with a small Node.js backend that receives the contact form and emails it to me.
 
 ## Tech stack
 
@@ -19,8 +19,7 @@ portfolio/
     js/main.js                 scroll setup, each section's animation, the contact form
     vendor/                    gsap, ScrollTrigger and Lenis (local copies)
     assets/img/                profile photo
-    assets/projects/           screenshots of the live projects (with small 720px copies for phones)
-    assets/resume/             resume PDF and a page-1 image of it
+    assets/projects/           screenshots of the live projects (with small 720px copies for phones) and the Goodway preview videos
   backend/
     server.js                  Express app: static files, security headers, compression, /api/health
     routes/contact.js          POST /api/contact (validation, honeypot, rate limit)
@@ -71,7 +70,7 @@ Set these in `.env` locally, or in the hosting control panel. Never commit a rea
 
 The server never caches `index.html`, and caches CSS, JavaScript and images for a year. Every CSS and JS link in `frontend/index.html` ends in a `?v=` number. When you change a CSS or JS file, bump that number in all those links so visitors get the new file.
 
-**When you replace any image or the resume, bump `ASSET_VERSION` in `frontend/js/main.js`.** The resume, its page image and all project screenshots are loaded with `?v=ASSET_VERSION` on their addresses, so a new version shows up straight away even though images are cached for a year. The resume PDF itself is never cached.
+**When you replace any image or video, bump `ASSET_VERSION` in `frontend/js/main.js`.** All project screenshots and the Goodway preview videos are loaded with `?v=ASSET_VERSION` on their addresses, so a new version shows up straight away even though images are cached for a year.
 
 ## Deploy on Hostinger (Node.js app)
 
@@ -85,4 +84,5 @@ The server never caches `index.html`, and caches CSS, JavaScript and images for 
 ## Notes
 
 - Project screenshots are real, unedited screenshots of the live sites.
-- The resume PDF in `frontend/assets/resume/` is the public version (it has no phone number). Keep it that way: this repository is public.
+- There is no resume on the site, because a different resume is sent to each company. Copies are kept outside the repo.
+- `goodway-preview.mp4` (and the 720px copy for phones) is a real, unedited screen recording of goodwaylaundromat.com scrolling top to bottom, made with playwright-core and compressed with ffmpeg. The Goodway card plays it (muted, looping) only while it is the front card.
