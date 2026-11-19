@@ -7,7 +7,7 @@ const ASSETS = document.currentScript ? new URL("../assets/", document.currentSc
 
 /* One shared version number for every project screenshot and preview video. Their addresses end in ?v=ASSET_VERSION, so a replaced file gets a
    new address and shows up at once, even though images are cached for a year. When you replace any image or video, change this number. */
-const ASSET_VERSION = "20261118-3";
+const ASSET_VERSION = "20261118-4";
 const versioned = (url) => url + "?v=" + ASSET_VERSION;
 
 /* =========================================================================
@@ -185,7 +185,7 @@ window.addEventListener("load", () => {
   /* PROJECTS: real screenshots (720px copies for phones via srcset), a 3D ring for desktop and tablet, a swipe carousel for phones */
   const proj = $("#proj");
   const LIVE = [
-    { name: "Goodway Laundromat", key: "goodway", video: true, noFull: true, dom: "goodwaylaundromat.com", url: "https://goodwaylaundromat.com", badge: "Latest launch", desc: "Full website for a 24-hour Lantana, FL laundromat with online pickup & delivery scheduling (Uber Direct drivers), cinematic scroll animations and local SEO.", hl: ["Pickup & delivery scheduling with Uber Direct drivers and a tracking link for each trip", "Pickup time windows and a ZIP-code service-area check", "Wash & fold pricing with an interactive price estimator", "Scroll-driven video sections and GSAP + Lenis animations", "Light and dark mode", "Local SEO: JSON-LD structured data, Google Analytics 4 events", "Google Maps directions, reviews and FAQ", "Hosted on Firebase App Hosting"], tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Lenis", "Uber Direct", "Firebase", "GA4"] },
+    { name: "Goodway Laundromat", key: "goodway", video: true, noFull: true, dom: "goodwaylaundromat.com", url: "https://goodwaylaundromat.com", badge: "Latest launch", desc: "Full website for a 24-hour Lantana, FL laundromat: pickup & delivery by Uber Direct drivers with tracking links, an interactive price estimator, ZIP-code coverage check and cinematic scroll-driven animations.", hl: ["Pickup & delivery by Uber Direct drivers, with tracking links", "Pickup time windows", "ZIP-code service-area check", "Wash & fold price estimator ($1.25/lb, $15 minimum)", "Scroll-driven video sections with GSAP + Lenis", "Light and dark mode", "GA4 event tracking built in (lead, call, email, directions, ZIP check)", "JSON-LD structured data for local SEO", "Google Maps directions, reviews and FAQ section", "Hosted on Firebase App Hosting"], tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Lenis", "Firebase", "Uber Direct delivery"] },
     { name: "A Fresh Leaf", key: "afreshleaf", fh: 5000, dom: "afreshleaf.com", desc: "Company site.", tags: ["MERN stack", "SEO", "Google Search Console"] },
     { name: "GoMunchz", key: "gomunchz", fh: 5000, dom: "gomunchz.com", desc: "MERN e-commerce with product catalog, cart, checkout and order management.", tags: ["MERN", "E-commerce"] },
     { name: "Kingston K9 Rescue Reserve", key: "kingstonk9", fh: 5000, dom: "kingstonk9.com", desc: "React + Node.js site for a business client.", tags: ["React", "Node.js"] },
