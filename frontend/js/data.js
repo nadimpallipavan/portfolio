@@ -11,11 +11,18 @@ window.DATA = {
   ],
   facts: ["4.0 · GPA · M.S. Data Science, FAU", "8 · Websites & applications shipped", "2+ · Years professional experience"],
   skillGroups: [
+    ["AI Engineering & Agents", ["Claude Code", "GitHub Copilot", "Windsurf / Cursor", "Devin", "MCP servers & clients", "Agentic workflows", "Prompt engineering", "RAG pipelines", "LoRA / PEFT fine-tuning", "LLM APIs", "Ollama"]],
+    ["Integration & DevOps", ["Python automation", "REST APIs", "Webhooks", "ngrok", "Cloudflare Tunnel", "SSH tunnels", "Docker", "CI/CD", "Git/GitHub workflows", "AWS", "GCP"]],
     ["Programming & Data", ["Python", "JavaScript (ES6+)", "TypeScript", "Java", "SQL", "C++", "Pandas", "NumPy", "data analysis", "visualization"]],
-    ["AI / Machine Learning", ["TensorFlow", "Keras", "Ollama", "LLM APIs", "prompt engineering", "OpenCV", "Matplotlib", "Power BI"]],
-    ["Frontend & Backend", ["React", "Next.js", "HTML5", "CSS3", "Node.js", "Express", "FastAPI", "Django", "Flask", "Spring Boot", "REST APIs"]],
-    ["Databases & Cloud", ["PostgreSQL", "MySQL", "MongoDB", "Supabase", "Redis", "Firebase", "AWS (EC2, S3, RDS)", "GCP", "Docker", "Vercel"]],
-    ["Engineering Practices", ["System design", "modular architecture", "testing", "CI/CD", "Git/GitHub PRs", "code review", "debugging", "performance optimization", "API security", "Linux", "Postman"]],
+    ["AI / Machine Learning", ["TensorFlow", "Keras", "OpenCV", "Matplotlib", "Power BI"]],
+    ["Frontend & Backend", ["React", "Next.js", "HTML5", "CSS3", "Node.js", "Express", "FastAPI", "Django", "Flask", "Spring Boot"]],
+    ["Databases & Cloud", ["PostgreSQL", "MySQL", "MongoDB", "Supabase", "Redis", "Firebase", "Vercel"]],
+    ["Engineering Practices", ["System design", "modular architecture", "testing", "code review", "debugging", "performance optimization", "API security", "Linux", "Postman", "Client-facing delivery"]],
+  ],
+  /* the two scrolling skill rows on desktop: the headline skills first */
+  skillRows: [
+    ["Claude Code", "MCP", "Agentic workflows", "RAG", "LoRA / PEFT", "Python", "TypeScript", "React", "Next.js", "Node.js", "Express", "FastAPI", "Django", "Flask", "Java", "SQL", "HTML5", "CSS3"],
+    ["ngrok", "Docker", "Cloudflare Tunnel", "Webhooks", "REST APIs", "CI/CD", "AWS", "GCP", "PostgreSQL", "MongoDB", "Redis", "Supabase", "Firebase", "TensorFlow", "Keras", "OpenCV", "Linux", "Postman"],
   ],
   jobs: [
     { when: "Oct 2026 – Present", org: "A Fresh Leaf LLC · United States", role: "Software Engineer (Full-Stack & Data Applications)", tech: "React, Node.js, Express, MongoDB, REST APIs, GitHub, cPanel / VPS", bullets: [

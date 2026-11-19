@@ -7,7 +7,7 @@ const ASSETS = document.currentScript ? new URL("../assets/", document.currentSc
 
 /* One shared version number for every project screenshot and preview video. Their addresses end in ?v=ASSET_VERSION, so a replaced file gets a
    new address and shows up at once, even though images are cached for a year. When you replace any image or video, change this number. */
-const ASSET_VERSION = "20261118-7";
+const ASSET_VERSION = "20261118-8";
 const versioned = (url) => url + "?v=" + ASSET_VERSION;
 
 /* =========================================================================
@@ -52,12 +52,9 @@ window.addEventListener("load", () => {
   /* ======================= ONE-TIME SETUP (DOM that does not depend on the screen size) ======================= */
   /* SKILLS: the two rows of pills */
   const tags = (arr, rot) => arr.map((s, i) => `<span class="tag ${(i + rot) % 3 === 0 ? "f" : (i + rot) % 3 === 1 ? "" : "r"}">${s}</span>`).join("");
-  const g = Object.fromEntries(DATA.skillGroups);
-  const topSk = [...g["Programming & Data"], ...g["Frontend & Backend"]];
-  const restSk = [...new Set([...g["AI / Machine Learning"], ...g["Databases & Cloud"], ...g["Engineering Practices"]])];
   const r1 = $(".r1"), r2 = $(".r2");
-  r1.innerHTML = tags(topSk, 0).repeat(3);
-  r2.innerHTML = tags([...restSk].reverse(), 1).repeat(3);
+  r1.innerHTML = tags(DATA.skillRows[0], 0).repeat(3);
+  r2.innerHTML = tags(DATA.skillRows[1], 1).repeat(3);
 
   /* HOME: one entry per letter (the solid copy and the outline copy together) */
   const home = $("#home"), me = $(".me", home), tag = $(".htag", home);
