@@ -7,7 +7,7 @@ const ASSETS = document.currentScript ? new URL("../assets/", document.currentSc
 
 /* One shared version number for every project screenshot and preview video. Their addresses end in ?v=ASSET_VERSION, so a replaced file gets a
    new address and shows up at once, even though images are cached for a year. When you replace any image or video, change this number. */
-const ASSET_VERSION = "20261118-4";
+const ASSET_VERSION = "20261118-5";
 const versioned = (url) => url + "?v=" + ASSET_VERSION;
 
 /* =========================================================================
@@ -185,7 +185,7 @@ window.addEventListener("load", () => {
   /* PROJECTS: real screenshots (720px copies for phones via srcset), a 3D ring for desktop and tablet, a swipe carousel for phones */
   const proj = $("#proj");
   const LIVE = [
-    { name: "Goodway Laundromat", key: "goodway", video: true, noFull: true, dom: "goodwaylaundromat.com", url: "https://goodwaylaundromat.com", badge: "Latest launch", desc: "Full website for a 24-hour Lantana, FL laundromat: pickup & delivery by Uber Direct drivers with tracking links, an interactive price estimator, ZIP-code coverage check and cinematic scroll-driven animations.", hl: ["Pickup & delivery by Uber Direct drivers, with tracking links", "Pickup time windows", "ZIP-code service-area check", "Wash & fold price estimator ($1.25/lb, $15 minimum)", "Scroll-driven video sections with GSAP + Lenis", "Light and dark mode", "GA4 event tracking built in (lead, call, email, directions, ZIP check)", "JSON-LD structured data for local SEO", "Google Maps directions, reviews and FAQ section", "Hosted on Firebase App Hosting"], tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Lenis", "Firebase", "Uber Direct delivery"] },
+    { name: "Goodway Laundromat", key: "goodway", video: true, noFull: true, dom: "goodwaylaundromat.com", url: "https://goodwaylaundromat.com", badge: "Latest launch", desc: "Full website for a 24-hour Lantana, FL laundromat: pickup & delivery by Uber Direct drivers with tracking links, an interactive price estimator, ZIP-code coverage check and cinematic scroll-driven animations.", hl: ["Pickup & delivery by Uber Direct drivers, with tracking links", "Interactive wash & fold price estimator", "Scroll-driven video sections with GSAP + Lenis", "JSON-LD + GA4 event tracking for local SEO", "ZIP-code service-area check", "Pickup time windows", "Wash & fold pricing: $1.25/lb, $15 minimum", "Light and dark mode", "Google Maps directions, reviews and FAQ section", "Hosted on Firebase App Hosting"], tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Lenis", "Firebase", "Uber Direct delivery"] },
     { name: "A Fresh Leaf", key: "afreshleaf", fh: 5000, dom: "afreshleaf.com", desc: "Company site.", tags: ["MERN stack", "SEO", "Google Search Console"] },
     { name: "GoMunchz", key: "gomunchz", fh: 5000, dom: "gomunchz.com", desc: "MERN e-commerce with product catalog, cart, checkout and order management.", tags: ["MERN", "E-commerce"] },
     { name: "Kingston K9 Rescue Reserve", key: "kingstonk9", fh: 5000, dom: "kingstonk9.com", desc: "React + Node.js site for a business client.", tags: ["React", "Node.js"] },
@@ -201,11 +201,11 @@ window.addEventListener("load", () => {
   const img = (p, kind, cls, sizes) => `<img class="${cls}" width="1440" height="${kind === "hero" ? 900 : p.fh}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="${versioned(ASSETS + "projects/" + p.key + "-" + kind + ".jpg")}" data-srcset="${versioned(ASSETS + "projects/" + p.key + "-" + kind + "-720.jpg")} 720w, ${versioned(ASSETS + "projects/" + p.key + "-" + kind + ".jpg")} 1440w" data-sizes="${sizes}">`;
   const SZ_RING = "(max-width:640px) 80vw, (max-width:1024px) 400px, 1440px", SZ_CAR = "80vw";
   const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${p.noFull ? "" : img(p, "full", "f", sizes)}${p.video ? `<video class="gv" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="${ASSETS + "projects/" + p.key + "-preview"}"></video>` : ""}<i class="shine"></i></div></div>`;
-  const infoBits = (p) => `${p.badge ? `<span class="badge">${p.badge}</span>` : ""}<h3>${p.name}</h3><p class="d">${p.desc}</p>${p.hl ? `<button class="hlb" type="button" aria-expanded="false">Highlights</button><ul class="hl">${p.hl.map((h, k) => `<li style="--k:${k}">${h}</li>`).join("")}</ul>` : ""}<div class="tags${p.hl ? " wide" : ""}">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
+  const infoBits = (p) => `${p.badge ? `<span class="badge">${p.badge}</span>` : ""}<h3>${p.name}</h3><p class="d">${p.desc}</p>${p.hl ? `<ul class="hl">${p.hl.map((h, k) => `<li${k >= 4 ? ' class="x"' : ""} style="--k:${k}">${h}</li>`).join("")}</ul><button class="hlm" type="button" aria-expanded="false">+ ${p.hl.length - 4} more</button>` : ""}<div class="tags${p.hl ? " wide" : ""}">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
   ring.innerHTML = LIVE.map((p, i) => `<article class="scr" tabindex="0" role="link" aria-label="${p.name}: ${i === 0 ? "open " + p.dom : "bring to front"}"><div class="face">${frame(p, SZ_RING)}
-    <div class="info">${infoBits(p)}<button class="prev" type="button">Preview</button><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a></div><div class="dimv"></div></div></article>`).join("");
+    <div class="info${p.hl ? " gw" : ""}">${infoBits(p)}<button class="prev" type="button">Preview</button><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a></div><div class="dimv"></div></div></article>`).join("");
   const car = document.createElement("div"); car.className = "pcar";
-  car.innerHTML = `<div class="ptrack" tabindex="0" aria-label="Featured projects, swipe sideways">${LIVE.map((p) => `<article class="slide">${frame(p, SZ_CAR)}<div class="info">${infoBits(p)}<div class="acts"><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a><button class="prev" type="button">Preview</button></div></div></article>`).join("")}</div><div class="pdots">${LIVE.map((p, i) => `<i role="button" aria-label="${p.name}" tabindex="0"></i>`).join("")}</div>`;
+  car.innerHTML = `<div class="ptrack" tabindex="0" aria-label="Featured projects, swipe sideways">${LIVE.map((p) => `<article class="slide">${frame(p, SZ_CAR)}<div class="info${p.hl ? " gw" : ""}">${infoBits(p)}<div class="acts"><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a><button class="prev" type="button">Preview</button></div></div></article>`).join("")}</div><div class="pdots">${LIVE.map((p, i) => `<i role="button" aria-label="${p.name}" tabindex="0"></i>`).join("")}</div>`;
   proj.insertBefore(car, $(".meta.b", proj));
   LIVE.forEach((p, i) => { if (p.noFull) { $$(".prev", ring)[i].hidden = true; $$(".prev", car)[i].hidden = true; } });
   const cards = $$(".scr", ring), faces = $$(".face", ring), dimvs = $$(".dimv", ring);
@@ -250,11 +250,11 @@ window.addEventListener("load", () => {
     };
     previews.set(root, o); return o;
   };
-  /* Highlights button (tablet and phone): expands the list; on desktop the list shows by itself on the front card */
-  $$(".hlb", proj).forEach((b) => b.addEventListener("click", (e) => {
+  /* "+ 6 more" button: opens and closes the full highlights list (every screen size) */
+  $$(".hlm", proj).forEach((b) => b.addEventListener("click", (e) => {
     e.preventDefault(); e.stopPropagation();
-    const info = b.closest(".info"), open = info.classList.toggle("open"); b.setAttribute("aria-expanded", open);
-    b.textContent = open ? "Hide highlights" : "Highlights";
+    const info = b.closest(".info"), n = info.querySelectorAll(".hl li.x").length, open = info.classList.toggle("open");
+    b.setAttribute("aria-expanded", open); b.textContent = open ? "Show less" : "+ " + n + " more";
   }));
   /* the Preview buttons (touch: the front ring card on tablets, every carousel slide on phones) */
   [...cards, ...slides].forEach((root) => {
@@ -613,7 +613,7 @@ window.addEventListener("load", () => {
             on(c, "mouseenter", () => { if (i === front) { hover = i; preview(c).start(); } });
             on(c, "mouseleave", () => { if (hover === i) { preview(c).stop(); hover = -1; } });
           }
-          on(c, "click", (e) => { if (e.target.closest(".visit,.prev,.hlb")) return; if (i === front) open(); else toFront(); });
+          on(c, "click", (e) => { if (e.target.closest(".visit,.prev,.hlm")) return; if (i === front) open(); else toFront(); });
           on(c, "keydown", (e) => { if (e.key === "Enter") { if (i === front) open(); else toFront(); } });
         });
         dispose.push(() => { gv.ring = -1; vidSync(); cards.forEach((c) => { const p = previews.get(c); if (p && p.on) p.stop(); c.classList.remove("front"); }); });
@@ -914,7 +914,7 @@ window.addEventListener("load", () => {
             on(c, "mouseenter", () => { if (i === front) { hover = i; preview(c).start(); } });
             on(c, "mouseleave", () => { if (hover === i) { preview(c).stop(); hover = -1; } });
           }
-          on(c, "click", (e) => { if (e.target.closest(".visit,.prev,.hlb")) return; if (i === front) open(); else toFront(); });
+          on(c, "click", (e) => { if (e.target.closest(".visit,.prev,.hlm")) return; if (i === front) open(); else toFront(); });
           on(c, "keydown", (e) => { if (e.key === "Enter") { if (i === front) open(); else toFront(); } });
         });
         dispose.push(() => { gv.ring = -1; vidSync(); cards.forEach((c) => { const p = previews.get(c); if (p && p.on) p.stop(); c.classList.remove("front"); }); });
