@@ -7,7 +7,7 @@ const ASSETS = document.currentScript ? new URL("../assets/", document.currentSc
 
 /* One shared version number for every project screenshot and preview video. Their addresses end in ?v=ASSET_VERSION, so a replaced file gets a
    new address and shows up at once, even though images are cached for a year. When you replace any image or video, change this number. */
-const ASSET_VERSION = "20261118-5";
+const ASSET_VERSION = "20261118-6";
 const versioned = (url) => url + "?v=" + ASSET_VERSION;
 
 /* =========================================================================
@@ -201,7 +201,7 @@ window.addEventListener("load", () => {
   const img = (p, kind, cls, sizes) => `<img class="${cls}" width="1440" height="${kind === "hero" ? 900 : p.fh}" alt="${p.name} ${kind === "hero" ? "home page" : "full page"}" decoding="async" data-src="${versioned(ASSETS + "projects/" + p.key + "-" + kind + ".jpg")}" data-srcset="${versioned(ASSETS + "projects/" + p.key + "-" + kind + "-720.jpg")} 720w, ${versioned(ASSETS + "projects/" + p.key + "-" + kind + ".jpg")} 1440w" data-sizes="${sizes}">`;
   const SZ_RING = "(max-width:640px) 80vw, (max-width:1024px) 400px, 1440px", SZ_CAR = "80vw";
   const frame = (p, sizes) => `<div class="win"><div class="bar"><i></i><i></i><i></i><span class="addr">${p.dom}</span></div><div class="vp">${img(p, "hero", "h", sizes)}${p.noFull ? "" : img(p, "full", "f", sizes)}${p.video ? `<video class="gv" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="${ASSETS + "projects/" + p.key + "-preview"}"></video>` : ""}<i class="shine"></i></div></div>`;
-  const infoBits = (p) => `${p.badge ? `<span class="badge">${p.badge}</span>` : ""}<h3>${p.name}</h3><p class="d">${p.desc}</p>${p.hl ? `<ul class="hl">${p.hl.map((h, k) => `<li${k >= 4 ? ' class="x"' : ""} style="--k:${k}">${h}</li>`).join("")}</ul><button class="hlm" type="button" aria-expanded="false">+ ${p.hl.length - 4} more</button>` : ""}<div class="tags${p.hl ? " wide" : ""}">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
+  const infoBits = (p) => `${p.badge ? `<span class="badge">${p.badge}</span>` : ""}<h3>${p.name}</h3><p class="d">${p.desc}</p>${p.hl ? `<ul class="hl">${p.hl.map((h, k) => `<li${k >= 4 ? ' class="x"' : ""} style="--k:${k}"><span>${h}</span></li>`).join("")}<li class="mo" style="--k:4"><button class="hlm" type="button" aria-expanded="false">+ ${p.hl.length - 4} more</button></li></ul>` : ""}<div class="tags${p.hl ? " wide" : ""}">${p.tags.map((t) => `<span>${t}</span>`).join("")}${p.progress ? '<span class="prog">In progress</span>' : ""}</div>`;
   ring.innerHTML = LIVE.map((p, i) => `<article class="scr" tabindex="0" role="link" aria-label="${p.name}: ${i === 0 ? "open " + p.dom : "bring to front"}"><div class="face">${frame(p, SZ_RING)}
     <div class="info${p.hl ? " gw" : ""}">${infoBits(p)}<button class="prev" type="button">Preview</button><a class="visit" href="${linkOf(p)}" target="_blank" rel="noopener noreferrer">Visit site ↗</a></div><div class="dimv"></div></div></article>`).join("");
   const car = document.createElement("div"); car.className = "pcar";
