@@ -532,3 +532,12 @@ html[data-bp="phone"] #proj .slide .info.open .hl li.x,html[data-bp="tabp"] #pro
 html[data-bp="phone"] #proj .slide .hl li>span,html[data-bp="tabp"] #proj .slide .hl li>span{animation:chipfloat 4.6s ease-in-out infinite;animation-delay:calc(var(--k)*-.8s)}
 html[data-bp="phone"] #proj .hlm,html[data-bp="tabp"] #proj .hlm{min-height:40px;font-size:13px}
 @media (prefers-reduced-motion:reduce){#proj .hl li>span{animation:none!important}}
+
+/* Skills on desktop: the groups sit below the two scrolling rows (the section grows taller), same pills as tablet and phone */
+html[data-bp="desk"] #skills{height:auto;min-height:calc(100*var(--u));padding-bottom:calc(16*var(--u))}
+html[data-bp="desk"] #skills .sgroups{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(5*var(--u)) 2.4vw;position:relative;z-index:2;margin:calc(88*var(--u)) 4vw 0}
+html[data-bp="desk"] #skills .sgroups h4{margin:0 0 12px;font:500 12px/1.6 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+html[data-bp="desk"] #skills .sgroups .pl{display:flex;flex-wrap:wrap;gap:8px}
+html[data-bp="desk"] #skills .pill2{display:inline-flex;align-items:center;min-height:36px;padding:0 15px;border:1px solid #3a3a3e;border-radius:99px;background:none;color:var(--fg);font:500 14px/1 var(--body);cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease}
+html[data-bp="desk"] #skills .pill2:hover{border-color:var(--acc)}
+html[data-bp="desk"] #skills .pill2.sel{background:var(--acc);border-color:var(--acc);color:#111}
