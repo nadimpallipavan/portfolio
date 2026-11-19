@@ -31,7 +31,7 @@ window.DATA = {
       "Integrated Cisco monitoring APIs and supported AWS EC2/RDS/S3, Redis caching, Nginx and Twilio alerts; investigated reliability and performance issues." ] },
   ],
   projects: [
-    { name: "Goodway Laundromat", domain: "goodwaylaundromat.com", url: "https://goodwaylaundromat.com", tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Firebase"], desc: "Website for a Lantana, FL laundromat: self-service, wash & fold and doorstep pickup and delivery, with scroll-driven video sections and light/dark mode." },
+    { name: "Goodway Laundromat", domain: "goodwaylaundromat.com", url: "https://goodwaylaundromat.com", tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Lenis", "Uber Direct", "Firebase", "GA4"], desc: "Full website for a 24-hour Lantana, FL laundromat with online pickup & delivery scheduling (Uber Direct drivers), cinematic scroll animations and local SEO.", highlights: ["Pickup & delivery scheduling with Uber Direct drivers and a tracking link for each trip", "Pickup time windows and a ZIP-code service-area check", "Wash & fold pricing with an interactive price estimator", "Scroll-driven video sections and GSAP + Lenis animations", "Light and dark mode", "Local SEO: JSON-LD structured data, Google Analytics 4 events", "Google Maps directions, reviews and FAQ", "Hosted on Firebase App Hosting"] },
     { name: "A Fresh Leaf", domain: "afreshleaf.com" },
     { name: "Kingston K9 Rescue Reserve", domain: "kingstonk9.com" },
     { name: "GoMunchz", domain: "gomunchz.com" },
